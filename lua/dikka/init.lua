@@ -25,11 +25,11 @@ vim.opt.inccommand = "nosplit"
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
-vim.opt.singcolumn = "yes:1"
+vim.opt.signcolumn = "yes:1"
 
 vim.opt.updatetime = 500
 
-vim.opt.colorcolumn = 80
+vim.opt.colorcolumn = "80"
 
 -- LAZY
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -81,8 +81,11 @@ require('lazy').setup({
 	},
 	{
 		'nvim-treesitter/nvim-treesitter',
-		{run = ':TSUpdate'}
 	},
+    {
+        'folke/which-key.nvim',
+        lazy = true,
+    },
 	{
 		'mbbill/undotree',
 	},
@@ -91,14 +94,13 @@ require('lazy').setup({
 -- PLUGINS CONFIGS
 
 -- rose-pine
-vim.cmd('colorscheme rose-pine'
+vim.cmd('colorscheme rose-pine')
 
 -- telescope
 local tele = require('telescope.builtin')
 vim.keymap.set('n', '<leader>pf', tele.find_files, {})
 vim.keymap.set('n', '<C-p>', tele.git_files, {})
 vim.keymap.set('n', '<leader>ps', tele.live_grep, {})
-
 
 -- treesitter
 require'nvim-treesitter.configs'.setup {
