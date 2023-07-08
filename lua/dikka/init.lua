@@ -132,6 +132,15 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+-- lsp-zero
+local lsp = require('lsp-zero').preset({})
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+lsp.setup()
+
 -- undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
