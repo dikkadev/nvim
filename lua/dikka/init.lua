@@ -89,6 +89,13 @@ require('lazy').setup({
 	{
 		'mbbill/undotree',
 	},
+    {
+        "kdheepak/lazygit.nvim",
+        -- optional for floating window border decoration
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+    },
 })
 
 -- PLUGINS CONFIGS
@@ -127,3 +134,6 @@ require'nvim-treesitter.configs'.setup {
 
 -- undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
+-- lazygit
+vim.keymap.set("n", "<leader>lg", vim.cmd.LazyGit)
