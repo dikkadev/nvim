@@ -159,7 +159,23 @@ require('lazy').setup({
 vim.cmd('colorscheme rose-pine')
 
 -- telescope
+require('telescope').setup {
+    defaults = {
+        -- Default configuration for telescope goes here:
+        -- config_key = value,
+        mappings = {
+            i = {
+                -- map actions.which_key to <C-h> (default: <C-/>)
+                -- actions.which_key shows the mappings for your picker,
+                -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+                ['<C-x>'] = 'select_vertical'
+            }
+        }
+    },
+}
+
 local tele = require('telescope.builtin')
+local tele_actions = require('telescope.actions')
 vim.keymap.set('n', '<leader>pf', tele.find_files, {})
 vim.keymap.set('n', '<C-p>', tele.git_files, {})
 vim.keymap.set('n', '<leader>ps', tele.live_grep, {})
@@ -167,7 +183,7 @@ vim.keymap.set('n', '<leader>ps', tele.live_grep, {})
 -- treesitter
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "javascript", "go", "rust", "typescript", "c", "lua", "vim", "vimdoc", "query" },
+    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vim", "vimdoc", "query" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
