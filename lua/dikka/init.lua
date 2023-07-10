@@ -14,6 +14,8 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
+vim.keymap.set('n', 'zx', 'zz')
+
 vim.keymap.set('n', '<leader>d', '"_d')
 vim.keymap.set('v', '<leader>d', '"_d')
 
@@ -28,7 +30,7 @@ vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
 vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set('x', '<leader>p', '|_dP')
 
-vim.keymap.set('n', ';', ':')
+-- vim.keymap.set('n', ';', ':')
 
 -- CONFIGS
 vim.opt.clipboard = 'unnamedplus'
@@ -57,7 +59,7 @@ vim.opt.signcolumn = "yes:1"
 vim.opt.updatetime = 500
 
 vim.opt.splitright = true
-vim.opt.colorcolumn = "80"
+-- vim.opt.colorcolumn = "80"
 
 -- LAZY
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
