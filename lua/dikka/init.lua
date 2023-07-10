@@ -80,41 +80,50 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+    -- Utility
+    {
+        'nvim-lua/plenary.nvim',
+    },
+
+    -- Theme
     {
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
         opts = {},
     },
+
+    -- LSP & Autocompletion
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         dependencies = {
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' }, -- Required
-            {                            -- Optional
-                'williamboman/mason.nvim',
-                build = function()
-                    pcall(vim.cmd, 'MasonUpdate')
-                end,
-            },
-            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },     -- Required
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' },     -- Required
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'L3MON4D3/LuaSnip' },
         }
     },
+
+    -- File Explorer & Searching
     {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.2',
-        -- or                              , branch = '0.1.x',
-        dependencies = { 'nvim-lua/plenary.nvim' }
     },
+    {
+        'ThePrimeagen/harpoon',
+    },
+
+    -- Syntax Highlighting & Code Understanding
     {
         'nvim-treesitter/nvim-treesitter',
     },
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+    },
+
+    -- Key Mapping Help
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
@@ -122,55 +131,51 @@ require('lazy').setup({
             vim.o.timeout = true
             vim.o.timeoutlen = 300
         end,
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        }
+        opts = {},
     },
-    {
-        'mbbill/undotree',
-    },
+
+    -- Git Tools
     {
         "kdheepak/lazygit.nvim",
-        -- optional for floating window border decoration
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
-    {
-        'github/copilot.vim',
-    },
-    {
-        'eandrju/cellular-automaton.nvim',
-    },
-    {
-        'ThePrimeagen/harpoon',
-    },
-    {
-        'echasnovski/mini.ai',
-        version = '*'
-    },
-    {
-        'echasnovski/mini.comment',
-        version = '*'
     },
     {
         'lewis6991/gitsigns.nvim',
         as = 'gitsigns',
     },
+
+    -- Editing Tools
     {
-        'AckslD/nvim-neoclip.lua',
+        'mbbill/undotree',
     },
     {
         'cohama/lexima.vim',
     },
     {
-        'nvim-treesitter/nvim-treesitter-context',
-    },
-    {
         'echasnovski/mini.surround',
         version = '*'
+    },
+    {
+        'echasnovski/mini.ai',
+        version = '*'
+    },
+
+    -- AI Tools
+    {
+        'github/copilot.vim',
+    },
+
+    -- Clipboard Manager
+    {
+        'AckslD/nvim-neoclip.lua',
+    },
+
+    -- Miscellaneous
+    {
+        'echasnovski/mini.comment',
+        version = '*'
+    },
+    {
+        'eandrju/cellular-automaton.nvim',
     },
 })
 --PLUGINSEND
