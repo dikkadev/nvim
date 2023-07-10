@@ -155,10 +155,6 @@ require('lazy').setup({
         'echasnovski/mini.comment',
         version = '*'
     },
-    {
-        'echasnovski/mini.jump',
-        version = '*'
-    },
     -- {
     --     "folke/noice.nvim",
     --     event = "VeryLazy",
@@ -177,9 +173,6 @@ require('lazy').setup({
     {
         'lewis6991/gitsigns.nvim',
         as = 'gitsigns',
-    },
-    {
-        'ggandor/leap.nvim',
     },
     {
         'AckslD/nvim-neoclip.lua',
@@ -297,9 +290,6 @@ require('mini.ai').setup()
 
 -- mini.comment
 require('mini.comment').setup()
-
--- mini.jump
-require('mini.jump').setup()
 
 -- -- noice
 -- require("noice").setup({
