@@ -81,8 +81,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
     {
-        'rose-pine/neovim',
-        name = 'rose-pine'
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
     },
     {
         'VonHeikemen/lsp-zero.nvim',
@@ -192,9 +194,10 @@ require('lazy').setup({
 --PLUGINSEND
 
 -- PLUGINS CONFIGS
-
--- rose-pine
-vim.cmd('colorscheme rose-pine')
+require("tokyonight").setup({
+    style = 'night',
+})
+vim.cmd [[colorscheme tokyonight]]
 
 -- telescope
 require('telescope').setup {
