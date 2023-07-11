@@ -274,6 +274,17 @@ cmp.setup({
     }
 })
 
+require('lspconfig').rust_analyzer.setup({
+    on_attach=on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = {
+                features = "all"
+            },
+        }
+    }
+})
+
 -- undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
