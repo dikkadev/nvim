@@ -53,7 +53,7 @@ vim.opt.inccommand = "nosplit"
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 16
+-- vim.opt.scrolloff = 16
 vim.opt.signcolumn = "yes:1"
 
 vim.opt.updatetime = 500
