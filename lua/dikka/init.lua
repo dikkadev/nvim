@@ -189,6 +189,12 @@ require('lazy').setup({
             -- refer to the configuration section below
         },
     },
+    {
+        'aznhe21/actions-preview.nvim',
+        config = function()
+            vim.keymap.set({ 'v', 'n' }, '<leader>vc', require('actions-preview').code_actions)
+        end,
+    }
 })
 --PLUGINSEND
 
@@ -264,7 +270,6 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
     vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
-    vim.keymap.set('n', '<leader>vc', '<cmd>TroubleToggle quickfix<cr>', opts)
     vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
     vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
