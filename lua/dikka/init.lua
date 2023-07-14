@@ -2,7 +2,7 @@ require('dikka.scrolloff')
 -- REMAPS
 vim.g.mapleader = ' '
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
-vim.keymap.set('n', '<C-s>', vim.cmd.w)
+vim.keymap.set({ 'n', 'v' }, '<C-s>', vim.cmd.w)
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
@@ -20,17 +20,55 @@ vim.keymap.set('n', '<leader>d', '"_d')
 vim.keymap.set('v', '<leader>d', '"_d')
 
 vim.keymap.set('i', '<C-c>', '<Esc>')
-vim.keymap.set('n', 'Q', '<nop>')
+vim.keymap.set({ 'n', 'v' }, 'Q', '<nop>')
 
 vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
 vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
 vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
 vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
 
-vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set('x', '<leader>p', '|_dP')
 
 vim.keymap.set('n', '<leader>w', ':set wrap!<CR>')
+
+vim.keymap.set('v', '<Leader>s', function()
+    -- Start undo block
+    vim.cmd('normal! u')
+
+    -- Save the current register and clipboard settings
+    local old_reg = vim.fn.getreg('"')
+    local old_clipboard = vim.o.clipboard
+
+    -- Don't allow system clipboard to be affected
+    vim.o.clipboard = ''
+
+    -- Visually select the previously visually-selected text and yank it
+    vim.cmd('normal! gv"xy')
+
+    -- Get the yanked text from the unnamed register
+    local selected_text = vim.fn.getreg('"')
+
+    -- Restore the old register and clipboard settings
+    vim.fn.setreg('"', old_reg)
+    vim.o.clipboard = old_clipboard
+
+    -- End undo block
+    vim.cmd('normal! u')
+
+    print(selected_text)
+
+    vim.cmd('normal! <C-c>') -- Go back to normal mode
+
+    selected_text = selected_text:gsub("/", "\\/")
+
+    local range_offset = vim.fn.input("Enter the range offset: ")
+    local command = ":,+" .. range_offset .. "s/" .. selected_text .. "//gI"
+    print(command)
+
+    -- Simulate typing the command into the command-line, but don't execute it
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(command .. "<Left><Left><Left>", true, true, true), 'n',
+        false)
+end, { noremap = true })
 
 -- CONFIGS
 vim.opt.clipboard = 'unnamedplus'
@@ -112,6 +150,9 @@ require('lazy').setup({
         'nvim-telescope/telescope.nvim',
     },
     {
+        'nvim-telescope/telescope-ui-select.nvim',
+    },
+    {
         'ThePrimeagen/harpoon',
     },
 
@@ -158,6 +199,21 @@ require('lazy').setup({
         'echasnovski/mini.ai',
         version = '*'
     },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        },
+    },
+    {
+        'aznhe21/actions-preview.nvim',
+        config = function()
+            vim.keymap.set({ 'v', 'n' }, '<leader>vc', require('actions-preview').code_actions)
+        end,
+    },
 
     -- AI Tools
     {
@@ -181,20 +237,11 @@ require('lazy').setup({
         'rmagatti/auto-session',
     },
     {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        },
+        'm-demare/attempt.nvim',
     },
     {
-        'aznhe21/actions-preview.nvim',
-        config = function()
-            vim.keymap.set({ 'v', 'n' }, '<leader>vc', require('actions-preview').code_actions)
-        end,
-    }
+        'numToStr/FTerm.nvim',
+    },
 })
 --PLUGINSEND
 
@@ -261,7 +308,7 @@ lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr }
 
-    vim.keymap.set({ 'n', 'x' }, '<leader>ff', function()
+    vim.keymap.set({ 'n', 'x' }, '<leader>f', function()
         vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
     end, opts)
     vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
@@ -366,3 +413,38 @@ require("auto-session").setup {
         end,
     },
 }
+
+-- telescope select
+require("telescope").setup {
+    extensions = {
+        ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+                -- even more opts
+            }
+        }
+    }
+}
+require("telescope").load_extension("ui-select")
+
+-- attempt
+require('attempt').setup()
+require('telescope').load_extension 'attempt'
+local attempt = require('attempt')
+
+vim.keymap.set('n', '<leader>an', attempt.new_select, { silent = true })       -- new attempt, selecting extension
+vim.keymap.set('n', '<leader>ai', attempt.new_input_ext, { silent = true })    -- new attempt, inputing extension
+vim.keymap.set('n', '<leader>ar', attempt.run, { silent = true })              -- run attempt
+vim.keymap.set('n', '<leader>ad', attempt.delete_buf, { silent = true })       -- delete attempt from current buffer
+vim.keymap.set('n', '<leader>ac', attempt.rename_buf, { silent = true })       -- rename attempt from current buffer
+vim.keymap.set('n', '<leader>al', ':Telescope attempt<CR>', { silent = true }) -- search through attempts
+
+-- FTerm
+require("FTerm").setup({
+    dimensions = {
+        height = 0.85,
+        width = 0.85,
+    },
+    border = 'double'
+})
+vim.keymap.set('n', '<A-z>', '<CMD>lua require("FTerm").toggle()<CR>')
+vim.keymap.set('t', '<A-z>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
