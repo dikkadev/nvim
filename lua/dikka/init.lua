@@ -258,6 +258,9 @@ require('lazy').setup({
     {
         'numToStr/FTerm.nvim',
     },
+    {
+        'chaoren/vim-wordmotion',
+    },
 })
 --PLUGINSEND
 
