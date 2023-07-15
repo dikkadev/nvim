@@ -29,7 +29,9 @@ vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
 
 vim.keymap.set('x', '<leader>p', '|_dP')
 
-vim.keymap.set('n', '<leader>w', ':set wrap!<CR>')
+vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
+vim.keymap.set('n', '<leader>w', '<C-w>')
+vim.keymap.set('n', '<C-Q>', ':xa<CR>')
 
 vim.keymap.set('v', '<Leader>s', function()
     -- Start undo block
