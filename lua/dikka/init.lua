@@ -33,7 +33,7 @@ vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
 vim.keymap.set('n', '<C-Q>', ':xa<CR>')
 
-vim.keymap.set('v', '<Leader>s', function()
+vim.keymap.set('v', '<leader>s', function()
     -- Start undo block
     vim.cmd('normal! u')
 
@@ -57,14 +57,24 @@ vim.keymap.set('v', '<Leader>s', function()
     -- End undo block
     vim.cmd('normal! u')
 
-    print(selected_text)
-
     vim.cmd('normal! <C-c>') -- Go back to normal mode
 
     selected_text = selected_text:gsub("/", "\\/")
 
-    local range_offset = vim.fn.input("Enter the range offset: ")
-    local command = ":,+" .. range_offset .. "s/" .. selected_text .. "//gI"
+    local range = vim.fn.input("Enter the range offset: ")
+    local command_start = ':'
+
+    if range == '%' then
+        command_start = command_start .. '%'
+    else
+        if type(range) == 'number' then
+            command_start = command_start .. ',+' .. range
+        else
+            command_start = command_start .. ',' .. range
+        end
+    end
+
+    local command = command_start .. "s/\\(" .. selected_text .. "\\)//gi"
     print(command)
 
     -- Simulate typing the command into the command-line, but don't execute it
