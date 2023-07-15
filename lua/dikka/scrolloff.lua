@@ -6,9 +6,9 @@ vim.cmd([[
 function UpdateScrollOff()
     local lines = vim.fn.line('$')
     if lines > 45 then
-        vim.opt.scrolloff = 8
+        vim.opt.scrolloff = 16
     else
-        vim.opt.scrolloff = 4
+        vim.opt.scrolloff = 8
     end
 end
 
