@@ -5,7 +5,7 @@ vim.cmd([[
 -- Update scroll offset based on window height
 function UpdateScrollOff()
     local lines = vim.fn.line('$')
-    if lines > 45 then
+    if lines > 35 then
         vim.opt.scrolloff = 16
     else
         vim.opt.scrolloff = 8
