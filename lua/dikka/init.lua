@@ -339,6 +339,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
     vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
+    vim.keymap.set('n', '<leader>r', ':LspRestart<CR>', opts)
 end)
 
 lsp.setup()
