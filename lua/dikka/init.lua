@@ -31,7 +31,8 @@ vim.keymap.set('x', '<leader>p', '|_dP')
 
 vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
-vim.keymap.set('n', '<C-Q>', ':qa<CR>')
+vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
+vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
 
 vim.keymap.set('v', '<leader>s', function()
     -- Start undo block
