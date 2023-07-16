@@ -1,87 +1,4 @@
 require('dikka.scrolloff')
--- REMAPS
-vim.g.mapleader = ' '
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
-vim.keymap.set({ 'n', 'v' }, '<C-s>', vim.cmd.w)
-
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
-
-vim.keymap.set('n', '<C-e>', '5<C-e>')
-vim.keymap.set('n', '<C-y>', '5<C-y>')
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-vim.keymap.set('n', 'n', 'nzzzv')
-vim.keymap.set('n', 'N', 'Nzzzv')
-
-vim.keymap.set('n', 'zx', 'zz')
-
-vim.keymap.set('n', '<leader>d', '"_d')
-vim.keymap.set('v', '<leader>d', '"_d')
-
-vim.keymap.set('i', '<C-c>', '<Esc>')
-vim.keymap.set({ 'n', 'v' }, 'Q', '<nop>')
-
-vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
-vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
-
-vim.keymap.set('x', '<leader>p', '|_dP')
-
-vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
-vim.keymap.set('n', '<leader>w', '<C-w>')
-vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
-vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
-
-vim.keymap.set('v', '<leader>s', function()
-    -- Start undo block
-    vim.cmd('normal! u')
-
-    -- Save the current register and clipboard settings
-    local old_reg = vim.fn.getreg('"')
-    local old_clipboard = vim.o.clipboard
-
-    -- Don't allow system clipboard to be affected
-    vim.o.clipboard = ''
-
-    -- Visually select the previously visually-selected text and yank it
-    vim.cmd('normal! gv"xy')
-
-    -- Get the yanked text from the unnamed register
-    local selected_text = vim.fn.getreg('"')
-
-    -- Restore the old register and clipboard settings
-    vim.fn.setreg('"', old_reg)
-    vim.o.clipboard = old_clipboard
-
-    -- End undo block
-    vim.cmd('normal! u')
-
-    vim.cmd('normal! <C-c>') -- Go back to normal mode
-
-    selected_text = selected_text:gsub("/", "\\/")
-
-    local range = vim.fn.input("Enter the range offset: ")
-    local command_start = ':'
-
-    if range == '%' then
-        command_start = command_start .. '%'
-    else
-        if tonumber(range) ~= nil then
-            command_start = command_start .. ',+' .. range
-        else
-            command_start = command_start .. ',' .. range
-        end
-    end
-
-    local command = command_start .. "s/\\(" .. selected_text .. "\\)//gi"
-    print(command)
-
-    -- Simulate typing the command into the command-line, but don't execute it
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(command .. "<Left><Left><Left>", true, true, true), 'n',
-        false)
-end, { noremap = true })
 
 -- CONFIGS
 vim.opt.clipboard = 'unnamedplus'
@@ -95,6 +12,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 vim.opt.smartindent = true
+vim.opt.ignorecase = true
 
 vim.opt.wrap = false
 
@@ -134,6 +52,12 @@ require('lazy').setup({
     -- Utility
     {
         'nvim-lua/plenary.nvim',
+    },
+    {
+        'folke/neodev.nvim',
+    },
+    {
+        'nvim-lualine/lualine.nvim',
     },
 
     -- Theme
@@ -178,6 +102,14 @@ require('lazy').setup({
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
+    },
+
+    -- Debugging
+    {
+        'mfussenegger/nvim-dap',
+    },
+    {
+        'rcarriga/nvim-dap-ui',
     },
 
     -- Key Mapping Help
@@ -262,7 +194,51 @@ require('lazy').setup({
         'djoshea/vim-autoread',
     },
 })
---PLUGINSEND
+
+-- REMAPS
+local wk = require("which-key")
+vim.g.mapleader = ' '
+wk.register({
+    ["<leader>"] = {
+        pv = { vim.cmd.Ex, "Ex command" },
+        q = { ":set wrap!<CR>", "Toggle wrap" },
+        w = { "<C-w>", "Window operations" },
+        k = { "<cmd>lnext<CR>zz", "Next location" },
+        j = { "<cmd>lprev<CR>zz", "Previous location" },
+    },
+    ["<C-s>"] = { vim.cmd.w, "Save" },
+    ["<C-d>"] = { '<C-d>zz', "Half-page down" },
+    ["<C-u>"] = { '<C-u>zz', "Half-page up" },
+    n = { 'nzzzv', "Search forward" },
+    N = { 'Nzzzv', "Search backward" },
+    zx = { 'zz', "Center line" },
+    ["<C-k>"] = { "<cmd>cnext<CR>zz", "Next quickfix" },
+    ["<C-j>"] = { "<cmd>cprev<CR>zz", "Previous quickfix" },
+    ["<A-a>"] = { ":qa<CR>", "Quit all" },
+    ["<A-w>"] = { ":wa<CR>", "Write all" },
+}, { mode = "n", prefix = "" })
+
+wk.register({
+    ["<C-s>"] = { vim.cmd.w, "Save" },
+    Q = { "<nop>", "Disable Q key" },
+    ["<A-a>"] = { ":qa<CR>", "Quit all" },
+    ["<A-w>"] = { ":wa<CR>", "Write all" },
+}, { mode = "v", prefix = "" })
+
+wk.register({
+    J = { ":m '>+1<CR>gv=gv", "Move lines down" },
+    K = { ":m '>-2<CR>gv=gv", "Move lines up" },
+}, { mode = "v", prefix = "" })
+
+wk.register({
+    ["<C-c>"] = { "<Esc>", "Exit insert mode" },
+}, { mode = "i", prefix = "" })
+
+wk.register({
+    ["<leader>p"] = { "|_dP", "Paste over selected text" },
+}, { mode = "x", prefix = "" })
+
+require('dikka.substitute')
 
 -- PLUGINS CONFIGS
 require("tokyonight").setup({
@@ -288,9 +264,14 @@ require('telescope').setup {
 
 local tele = require('telescope.builtin')
 local tele_actions = require('telescope.actions')
-vim.keymap.set('n', '<leader>pf', tele.find_files, {})
-vim.keymap.set('n', '<C-p>', tele.git_files, {})
-vim.keymap.set('n', '<leader>ps', tele.live_grep, {})
+wk.register({
+    p = {
+        name = "Project files",
+        f = { tele.find_files, "Find Files" },
+        s = { tele.live_grep, "Live Grep" },
+        g = { tele.git_files, "Git Files" },
+    }
+}, { mode = "n", prefix = "<leader>" })
 
 -- treesitter
 require 'nvim-treesitter.configs'.setup {
@@ -327,19 +308,26 @@ lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr }
 
-    vim.keymap.set({ 'n', 'x' }, '<leader>f', function()
-        vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-    end, opts)
-    vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
-    vim.keymap.set('n', '<leader>vw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
-    vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
-    vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
-    vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
-    vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
-    vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
-    vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
-    vim.keymap.set('n', '<leader>r', ':LspRestart<CR>', opts)
+    wk.register({
+        gd = { function() vim.lsp.buf.definition() end, "Go to Definition" },
+        K = { function() vim.lsp.buf.hover() end, "Hover Documentation" },
+        ["]d"] = { function() vim.diagnostic.goto_next() end, "Next Diagnostic" },
+        ["[d"] = { function() vim.diagnostic.goto_prev() end, "Previous Diagnostic" },
+        ["<leader>r"] = { ":LspRestart<CR>", "Restart LSP" },
+        v = {
+            name = "LSP Things",
+            w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace Diagnostics" },
+            d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics" },
+            r = { "<cmd>TroubleToggle lsp_references<cr>", "LSP References" },
+            c = { require('actions-preview').code_actions, "Code Actions" },
+            n = { function() vim.lsp.buf.rename() end, "Rename Symbol" },
+        },
+        f = { function() vim.lsp.buf.format({ async = false, timeout_ms = 10000 }) end, "Format Buffer" },
+    }, { mode = "n", prefix = "<leader>" })
+
+    wk.register({
+        ["<C-h>"] = { function() vim.lsp.buf.signature_help() end, "Signature Help" },
+    }, { mode = "i", prefix = "" })
 end)
 
 lsp.setup()
@@ -363,26 +351,36 @@ require('lspconfig').rust_analyzer.setup({
 })
 
 -- undotree
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+wk.register({
+    u = {"<cmd>UndotreeToggle<cr>", "Toggle Undotree"},
+}, { mode = "n", prefix = "<leader>"})
 
 -- lazygit
-vim.keymap.set("n", "<leader>lg", vim.cmd.LazyGit)
+wk.register({
+    lg = {"<cmd>LazyGit<cr>", "LazyGit"},
+}, { mode = "n", prefix = "<leader>"})
 
 -- cellular automaton
-vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
+wk.register({
+    m = {"<cmd>CellularAutomaton make_it_rain<CR>", "Make it rain"},
+}, { mode = "n", prefix = "<leader>"})
 
 -- harpoon
 
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
 
-vim.keymap.set("n", "<leader>a", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+wk.register({
+    ["<C-e>"] = {ui.toggle_quick_menu, "Toggle harpoon"},
+    ["<C-h>"] = {function() ui.nav_file(1) end, "Navigate to file 1"},
+    ["<C-j>"] = {function() ui.nav_file(2) end, "Navigate to file 2"},
+    ["<C-k>"] = {function() ui.nav_file(3) end, "Navigate to file 3"},
+    ["<C-l>"] = {function() ui.nav_file(4) end, "Navigate to file 4"},
+}, { mode = "n", prefix = "" })
 
-vim.keymap.set("n", "<C-h>", function() ui.nav_file(1) end)
-vim.keymap.set("n", "<C-j>", function() ui.nav_file(2) end)
-vim.keymap.set("n", "<C-k>", function() ui.nav_file(3) end)
-vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end)
+wk.register({
+    a = {mark.add_file, "Add file to mark"},
+}, { mode = "n", prefix = "<leader>" })
 
 -- mini.ai
 require('mini.ai').setup()
@@ -396,7 +394,9 @@ require('gitsigns').setup()
 -- neoclip
 require('neoclip').setup()
 require('telescope').load_extension('neoclip')
-vim.keymap.set('n', '<leader>c', ':Telescope neoclnvim-treesitter/nvim-treesitter-contextip<CR>')
+wk.register({
+    c = {"<cmd>Telescope neoclnvim-treesitter/nvim-treesitter-contextip<CR>", "Neoclip"},
+}, { mode = "n", prefix = "<leader>"})
 
 -- treesitter-context
 require('treesitter-context').setup {
@@ -414,9 +414,9 @@ require('treesitter-context').setup {
     on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
 
-vim.keymap.set("n", "[c", function()
-    require("treesitter-context").go_to_context()
-end, { silent = true })
+wk.register({
+    ["[c"] = {function() require("treesitter-context").go_to_context() end, "Go to context"},
+}, { mode = "n", prefix = "", silent = true })
 
 -- mini-surround
 require('mini.surround').setup()
@@ -451,12 +451,17 @@ require('attempt').setup()
 require('telescope').load_extension 'attempt'
 local attempt = require('attempt')
 
-vim.keymap.set('n', '<leader>an', attempt.new_select, { silent = true })       -- new attempt, selecting extension
-vim.keymap.set('n', '<leader>ai', attempt.new_input_ext, { silent = true })    -- new attempt, inputing extension
-vim.keymap.set('n', '<leader>ar', attempt.run, { silent = true })              -- run attempt
-vim.keymap.set('n', '<leader>ad', attempt.delete_buf, { silent = true })       -- delete attempt from current buffer
-vim.keymap.set('n', '<leader>ac', attempt.rename_buf, { silent = true })       -- rename attempt from current buffer
-vim.keymap.set('n', '<leader>al', ':Telescope attempt<CR>', { silent = true }) -- search through attempts
+wk.register({
+    a = {
+        name = "Scratch files",
+        n = {attempt.new_select, "New from predefined", silent = true},
+        i = {attempt.new_input_ext, "Custom extension", silent = true},
+        r = {attempt.run, "Run scractch file", silent = true},
+        d = {attempt.delete_buf, "Delete scratch file", silent = true},
+        c = {attempt.rename_buf, "Rename scratch file", silent = true},
+        l = {":Telescope attempt<CR>", "Search through sratch files", silent = true},
+    }
+}, { mode = "n", prefix = "<leader>" })
 
 -- FTerm
 require("FTerm").setup({
@@ -466,8 +471,13 @@ require("FTerm").setup({
     },
     border = 'double'
 })
-vim.keymap.set('n', '<A-z>', '<CMD>lua require("FTerm").toggle()<CR>')
-vim.keymap.set('t', '<A-z>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+wk.register({
+    ["<A-z>"] = {"<CMD>lua require('FTerm').toggle()<CR>", "Toggle FTerm"},
+}, { mode = "n", prefix = "" })
+
+wk.register({
+    ["<A-z>"] = {"<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", "Toggle FTerm"},
+}, { mode = "t", prefix = "" })
 
 -- telescope-file-browser
 require("telescope").setup {
@@ -487,11 +497,9 @@ require("telescope").setup {
     },
 }
 require("telescope").load_extension "file_browser"
-vim.api.nvim_set_keymap(
-    "n",
-    "<space>pv",
-    ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-    { noremap = true }
-)
+wk.register({
+    pv = {":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File browser"},
+}, { mode = "n", prefix = "<space>", noremap = true })
+
 -- DAP
 require("dikka.debugger")
