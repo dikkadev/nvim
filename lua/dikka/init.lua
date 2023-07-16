@@ -105,13 +105,12 @@ vim.opt.inccommand = "nosplit"
 
 vim.opt.termguicolors = true
 
--- vim.opt.scrolloff = 16
 vim.opt.signcolumn = "yes:1"
 
 vim.opt.updatetime = 500
 
+vim.opt.autoread = true
 vim.opt.splitright = true
--- vim.opt.colorcolumn = "80"
 
 -- LAZY
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -260,7 +259,7 @@ require('lazy').setup({
         'numToStr/FTerm.nvim',
     },
     {
-        'chaoren/vim-wordmotion',
+        'djoshea/vim-autoread',
     },
 })
 --PLUGINSEND
