@@ -68,7 +68,7 @@ vim.keymap.set('v', '<leader>s', function()
     if range == '%' then
         command_start = command_start .. '%'
     else
-        if type(range) == 'number' then
+        if tonumber(range) ~= nil then
             command_start = command_start .. ',+' .. range
         else
             command_start = command_start .. ',' .. range
