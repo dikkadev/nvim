@@ -66,7 +66,6 @@ require('lazy').setup({
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
-        opts = {},
     },
 
     -- LSP & Autocompletion
@@ -86,6 +85,33 @@ require('lazy').setup({
     -- File Explorer & Searching
     {
         'nvim-telescope/telescope.nvim',
+        config = function()
+            require('telescope').setup {
+                defaults = {
+                    -- Default configuration for telescope goes here:
+                    -- config_key = value,
+                    mappings = {
+                        i = {
+                            -- map actions.which_key to <C-h> (default: <C-/>)
+                            -- actions.which_key shows the mappings for your picker,
+                            -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+                            ['<C-x>'] = 'select_vertical'
+                        }
+                    }
+                },
+            }
+
+            local tele = require('telescope.builtin')
+            local tele_actions = require('telescope.actions')
+            wk.register({
+                p = {
+                    name = "Project files",
+                    f = { tele.find_files, "Find Files" },
+                    s = { tele.live_grep, "Live Grep" },
+                    g = { tele.git_files, "Git Files" },
+                }
+            }, { mode = "n", prefix = "<leader>" })
+        end
     },
     {
         'nvim-telescope/telescope-ui-select.nvim',
@@ -100,6 +126,30 @@ require('lazy').setup({
     -- Syntax Highlighting & Code Understanding
     {
         'nvim-treesitter/nvim-treesitter',
+        config = function()
+        require 'nvim-treesitter.configs'.setup {
+            -- A list of parser names, or "all" (the five listed parsers should always be installed)
+            ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vim", "vimdoc",
+                "query" },
+
+            -- Install parsers synchronously (only applied to `ensure_installed`)
+            sync_install = false,
+
+            -- Automatically install missing parsers when entering buffer
+            -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+            auto_install = true,
+
+            highlight = {
+                enable = true,
+
+                -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+                -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+                -- Using this option may slow down your editor, and you may see some duplicate highlights.
+                -- Instead of true it can also be a list of languages
+                additional_vim_regex_highlighting = false,
+            },
+        }
+    end
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
@@ -117,6 +167,7 @@ require('lazy').setup({
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
+        priority = 900,
         init = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
@@ -257,55 +308,8 @@ require("tokyonight").setup({
 vim.cmd [[colorscheme tokyonight]]
 
 -- telescope
-require('telescope').setup {
-    defaults = {
-        -- Default configuration for telescope goes here:
-        -- config_key = value,
-        mappings = {
-            i = {
-                -- map actions.which_key to <C-h> (default: <C-/>)
-                -- actions.which_key shows the mappings for your picker,
-                -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-                ['<C-x>'] = 'select_vertical'
-            }
-        }
-    },
-}
-
-local tele = require('telescope.builtin')
-local tele_actions = require('telescope.actions')
-wk.register({
-    p = {
-        name = "Project files",
-        f = { tele.find_files, "Find Files" },
-        s = { tele.live_grep, "Live Grep" },
-        g = { tele.git_files, "Git Files" },
-    }
-}, { mode = "n", prefix = "<leader>" })
 
 -- treesitter
-require 'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vim", "vimdoc", "query" },
-
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
-
-    highlight = {
-        enable = true,
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
-}
-
 -- lsp-zero
 local lsp = require('lsp-zero').preset({
     manage_nvim_cmp = {
