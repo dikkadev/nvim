@@ -20,7 +20,7 @@ wk.register({
     ["<F9>"] = { require 'dap'.continue, "dap continue" },
     ["<F8>"] = { require 'dap'.step_over, "dap step over" },
     ["<F7>"] = { require 'dap'.step_into, "dap step into" },
-    ["S-<F8>"] = { require 'dap'.step_out, "dap step out" },
+    ["<F6>"] = { require 'dap'.step_out, "dap step out" },
 }, { mode = "n", prefix = "" })
 
 wk.register({
@@ -54,6 +54,12 @@ dap.configurations.go = {
         name = "Debug",
         request = "launch",
         program = "${file}"
+    },
+    {
+        type = "delve",
+        name = "Debug (go.mod)",
+        request = "launch",
+        program = "./${relativeFileDirname}"
     },
     {
         type = "delve",
