@@ -1,4 +1,4 @@
-require('dikka.scrolloff')
+-- require('dikka.scrolloff')
 
 -- CONFIGS
 vim.opt.clipboard = 'unnamedplus'
@@ -24,6 +24,7 @@ vim.opt.inccommand = "nosplit"
 vim.opt.termguicolors = true
 
 vim.opt.signcolumn = "yes:1"
+vim.opt.scrolloff = 16
 
 vim.opt.updatetime = 500
 
