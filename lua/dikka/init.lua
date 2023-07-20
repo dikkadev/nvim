@@ -364,18 +364,18 @@ require('lspconfig').rust_analyzer.setup({
 
 -- undotree
 wk.register({
-    u = {"<cmd>UndotreeToggle<cr>", "Toggle Undotree"},
-}, { mode = "n", prefix = "<leader>"})
+    u = { "<cmd>UndotreeToggle<cr>", "Toggle Undotree" },
+}, { mode = "n", prefix = "<leader>" })
 
 -- lazygit
 wk.register({
-    lg = {"<cmd>LazyGit<cr>", "LazyGit"},
-}, { mode = "n", prefix = "<leader>"})
+    lg = { "<cmd>LazyGit<cr>", "LazyGit" },
+}, { mode = "n", prefix = "<leader>" })
 
 -- cellular automaton
 wk.register({
-    m = {"<cmd>CellularAutomaton make_it_rain<CR>", "Make it rain"},
-}, { mode = "n", prefix = "<leader>"})
+    m = { "<cmd>CellularAutomaton make_it_rain<CR>", "Make it rain" },
+}, { mode = "n", prefix = "<leader>" })
 
 -- harpoon
 
@@ -383,15 +383,15 @@ local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
 
 wk.register({
-    ["<C-e>"] = {ui.toggle_quick_menu, "Toggle harpoon"},
-    ["<C-h>"] = {function() ui.nav_file(1) end, "Navigate to file 1"},
-    ["<C-j>"] = {function() ui.nav_file(2) end, "Navigate to file 2"},
-    ["<C-k>"] = {function() ui.nav_file(3) end, "Navigate to file 3"},
-    ["<C-l>"] = {function() ui.nav_file(4) end, "Navigate to file 4"},
+    ["<C-e>"] = { ui.toggle_quick_menu, "Toggle harpoon" },
+    ["<C-h>"] = { function() ui.nav_file(1) end, "Navigate to file 1" },
+    ["<C-j>"] = { function() ui.nav_file(2) end, "Navigate to file 2" },
+    ["<C-k>"] = { function() ui.nav_file(3) end, "Navigate to file 3" },
+    ["<C-l>"] = { function() ui.nav_file(4) end, "Navigate to file 4" },
 }, { mode = "n", prefix = "" })
 
 wk.register({
-    a = {mark.add_file, "Add file to mark"},
+    a = { mark.add_file, "Add file to mark" },
 }, { mode = "n", prefix = "<leader>" })
 
 -- mini.ai
@@ -407,8 +407,8 @@ require('gitsigns').setup()
 require('neoclip').setup()
 require('telescope').load_extension('neoclip')
 wk.register({
-    c = {"<cmd>Telescope neoclnvim-treesitter/nvim-treesitter-contextip<CR>", "Neoclip"},
-}, { mode = "n", prefix = "<leader>"})
+    c = { "<cmd>Telescope neoclnvim-treesitter/nvim-treesitter-contextip<CR>", "Neoclip" },
+}, { mode = "n", prefix = "<leader>" })
 
 -- treesitter-context
 require('treesitter-context').setup {
@@ -427,7 +427,7 @@ require('treesitter-context').setup {
 }
 
 wk.register({
-    ["[c"] = {function() require("treesitter-context").go_to_context() end, "Go to context"},
+    ["[c"] = { function() require("treesitter-context").go_to_context() end, "Go to context" },
 }, { mode = "n", prefix = "", silent = true })
 
 -- mini-surround
@@ -466,12 +466,12 @@ local attempt = require('attempt')
 wk.register({
     a = {
         name = "Scratch files",
-        n = {attempt.new_select, "New from predefined", silent = true},
-        i = {attempt.new_input_ext, "Custom extension", silent = true},
-        r = {attempt.run, "Run scractch file", silent = true},
-        d = {attempt.delete_buf, "Delete scratch file", silent = true},
-        c = {attempt.rename_buf, "Rename scratch file", silent = true},
-        l = {":Telescope attempt<CR>", "Search through sratch files", silent = true},
+        n = { attempt.new_select, "New from predefined", silent = true },
+        i = { attempt.new_input_ext, "Custom extension", silent = true },
+        r = { attempt.run, "Run scractch file", silent = true },
+        d = { attempt.delete_buf, "Delete scratch file", silent = true },
+        c = { attempt.rename_buf, "Rename scratch file", silent = true },
+        l = { ":Telescope attempt<CR>", "Search through sratch files", silent = true },
     }
 }, { mode = "n", prefix = "<leader>" })
 
@@ -484,11 +484,11 @@ require("FTerm").setup({
     border = 'double'
 })
 wk.register({
-    ["<A-z>"] = {"<CMD>lua require('FTerm').toggle()<CR>", "Toggle FTerm"},
+    ["<A-z>"] = { "<CMD>lua require('FTerm').toggle()<CR>", "Toggle FTerm" },
 }, { mode = "n", prefix = "" })
 
 wk.register({
-    ["<A-z>"] = {"<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", "Toggle FTerm"},
+    ["<A-z>"] = { "<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", "Toggle FTerm" },
 }, { mode = "t", prefix = "" })
 
 -- telescope-file-browser
@@ -510,7 +510,7 @@ require("telescope").setup {
 }
 require("telescope").load_extension "file_browser"
 wk.register({
-    pv = {":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File browser"},
+    pv = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File browser" },
 }, { mode = "n", prefix = "<space>", noremap = true })
 
 -- DAP
