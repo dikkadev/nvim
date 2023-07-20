@@ -318,11 +318,13 @@ lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr }
 
+    vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+    vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     wk.register({
         gd = { function() vim.lsp.buf.definition() end, "Go to Definition" },
         K = { function() vim.lsp.buf.hover() end, "Hover Documentation" },
-        ["]d"] = { function() vim.diagnostic.goto_next() end, "Next Diagnostic" },
-        ["[d"] = { function() vim.diagnostic.goto_prev() end, "Previous Diagnostic" },
+        -- ["]d"] = { function() vim.diagnostic.goto_next() end, "Next Diagnostic" },
+        -- ["[d"] = { function() vim.diagnostic.goto_prev() end, "Previous Diagnostic" },
         ["<leader>r"] = { ":LspRestart<CR>", "Restart LSP" },
         v = {
             name = "LSP Things",
