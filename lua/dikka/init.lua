@@ -174,6 +174,11 @@ require('lazy').setup({
         'AckslD/nvim-neoclip.lua',
     },
 
+    -- Language Specific
+    {
+        'buoto/gotests-vim',
+    },
+
     -- Miscellaneous
     {
         'echasnovski/mini.comment',
