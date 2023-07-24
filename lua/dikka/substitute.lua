@@ -25,6 +25,8 @@ local function my_substitute()
 
     vim.cmd('normal! <C-c>') -- Go back to normal mode
 
+    -- Escape special characters
+    selected_text = selected_text:gsub("([%.%*%\\%/[%]{}%^%$|])", "\\%1")
     selected_text = selected_text:gsub("/", "\\/")
 
     local range = vim.fn.input("Enter the range offset: ")
@@ -51,5 +53,5 @@ end
 -- Register with which-key
 local wk = require("which-key")
 wk.register({
-    ["<leader>s"] = {my_substitute, "Substitute selection"},
-}, {mode = "v", prefix = ""})
+    ["<leader>s"] = { my_substitute, "Substitute selection" },
+}, { mode = "v", prefix = "" })
