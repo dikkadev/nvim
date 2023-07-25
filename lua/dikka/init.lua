@@ -455,7 +455,7 @@ require('telescope').load_extension 'attempt'
 local attempt = require('attempt')
 
 wk.register({
-    a = {
+    s = {
         name = "Scratch files",
         n = { attempt.new_select, "New from predefined", silent = true },
         i = { attempt.new_input_ext, "Custom extension", silent = true },
@@ -553,7 +553,7 @@ require 'nvim-treesitter.configs'.setup {
         swap = {
             enable = true,
             swap_next = {
-                ["<leader>a"] = "@parameter.inner",
+                ["<leader>n"] = "@parameter.inner",
             },
         },
         move = {
