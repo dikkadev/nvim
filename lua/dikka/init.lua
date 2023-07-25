@@ -172,11 +172,6 @@ require('lazy').setup({
         'github/copilot.vim',
     },
 
-    -- Clipboard Manager
-    {
-        'AckslD/nvim-neoclip.lua',
-    },
-
     -- Language Specific
     {
         'buoto/gotests-vim',
@@ -405,13 +400,6 @@ require('mini.comment').setup()
 
 -- gitsigns
 require('gitsigns').setup()
-
--- neoclip
-require('neoclip').setup()
-require('telescope').load_extension('neoclip')
-wk.register({
-    c = { "<cmd>Telescope neoclnvim-treesitter/nvim-treesitter-contextip<CR>", "Neoclip" },
-}, { mode = "n", prefix = "<leader>" })
 
 -- treesitter-context
 require('treesitter-context').setup {
