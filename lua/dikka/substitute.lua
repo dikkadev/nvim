@@ -27,6 +27,7 @@ local function my_substitute()
 
     -- Escape special characters
     selected_text = selected_text:gsub("([%.%*%\\%/[%]{}%^%$|])", "\\%1")
+    selected_text = selected_text:gsub("\n", "\\n")
     selected_text = selected_text:gsub("/", "\\/")
 
     local range = vim.fn.input("Enter the range offset: ")
