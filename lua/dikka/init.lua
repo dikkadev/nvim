@@ -176,6 +176,11 @@ require('lazy').setup({
     {
         'buoto/gotests-vim',
     },
+    {
+        'kaarmu/typst.vim',
+        ft = 'typst',
+        lazy = false,
+    },
 
     -- Miscellaneous
     {
@@ -359,6 +364,12 @@ require('lspconfig').rust_analyzer.setup({
         }
     }
 })
+
+require('lspconfig').typst_lsp.setup{
+	settings = {
+		exportPdf = "never" -- Choose onType, onSave or never.
+	}
+}
 
 -- undotree
 wk.register({
