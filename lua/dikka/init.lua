@@ -397,6 +397,8 @@ wk.register({
     ["<C-j>"] = { function() ui.nav_file(2) end, "Navigate to file 2" },
     ["<C-k>"] = { function() ui.nav_file(3) end, "Navigate to file 3" },
     ["<C-l>"] = { function() ui.nav_file(4) end, "Navigate to file 4" },
+    ["<C-;>"] = { function() ui.nav_file(5) end, "Navigate to file 5" },
+    ["<C-'>"] = { function() ui.nav_file(6) end, "Navigate to file 6" },
 }, { mode = "n", prefix = "" })
 
 wk.register({
