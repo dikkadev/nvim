@@ -260,9 +260,8 @@ require("tokyonight").setup({
     style = 'night',
 })
 vim.cmd [[colorscheme tokyonight]]
--- Override the selection background color
-vim.cmd[[ hi Visual guibg=#67703B ]]
-vim.cmd[[ hi VisualNC guibg=#67703B ]]
+vim.cmd[[ hi Visual guifg=#55559b ]]
+vim.cmd[[ hi Visual guibg=#e1e132 ]]
 
 -- telescope
 require('telescope').setup {
