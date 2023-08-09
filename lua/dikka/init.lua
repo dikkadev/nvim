@@ -166,6 +166,9 @@ require('lazy').setup({
             vim.keymap.set({ 'v', 'n' }, '<leader>vc', require('actions-preview').code_actions)
         end,
     },
+    {
+        'ziontee113/color-picker.nvim',
+    },
 
     -- AI Tools
     {
@@ -613,3 +616,7 @@ local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
 
 vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
 vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+-- color-picker
+require('color-picker').setup()
+vim.keymap.set("n", "<leader>c", "<cmd>PickColor<cr>", opts)
