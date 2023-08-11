@@ -169,6 +169,10 @@ require('lazy').setup({
     {
         'ziontee113/color-picker.nvim',
     },
+    {
+        'sett17/quicksub.nvim',
+        as = 'quicksub',
+    },
 
     -- AI Tools
     {
@@ -255,8 +259,6 @@ wk.register({
 wk.register({
     ["<leader>p"] = { "|_dP", "Paste over selected text" },
 }, { mode = "x", prefix = "" })
-
-require('dikka.substitute')
 
 -- PLUGINS CONFIGS
 require("tokyonight").setup({
@@ -620,3 +622,10 @@ vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 -- color-picker
 require('color-picker').setup()
 vim.keymap.set("n", "<leader>c", "<cmd>PickColor<cr>", opts)
+
+-- quicksub
+local qs = require('quicksub.quicksub')
+wk.register({
+    ["<leader>s"] = { qs.quicksub, "Quicksub" },
+}, { mode = "v", prefix = "" })
+
