@@ -519,5 +519,11 @@ require('lazy').setup({
         dependencies = { 'mfussenegger/nvim-dap' },
         opts = {},
     },
+    {
+        'NoahTheDuke/vim-just',
+    },
+    {
+        'IndianBoy42/tree-sitter-just',
+    },
 })
 require("dikka.debugger")
