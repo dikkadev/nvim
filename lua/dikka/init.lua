@@ -389,7 +389,32 @@ require('lazy').setup({
                     exportPdf = "never" -- Choose onType, onSave or never.
                 }
             }
-        end,
+
+            require('lspconfig').clangd.setup {
+                cmd = { "clangd", "--background-index" },
+                filetypes = { "c", "cpp" },
+                on_attach = function(client)
+                    client.resolved_capabilities.document_formatting = true
+                end,
+                flags = {
+                    debounce_text_changes = 150,
+                },
+                init_options = {
+                    compilationDatabaseDirectory = "build",
+                    clangdFileStatus = true,
+                },
+                handlers = require('lspconfig').util.default_handlers,
+                settings = {
+                    clangd = {
+                        fallbackFlags = {
+                            "-isystem", "C:/VulkanSDK/1.3.250.1/Include",
+                            "-isystem", "C:/Users/raikr/Documents/Libraries/glfw-3.3.8.bin.WIN64/include",
+                            "-isystem", "C:/Users/raikr/Documents/Libraries/glm",
+                        },
+                    },
+                },
+            }
+        end
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -501,11 +526,6 @@ require('lazy').setup({
         keys = {
             { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
         },
-    },
-    {
-        'lewis6991/gitsigns.nvim',
-        as = 'gitsigns',
-        opts = {},
     },
     {
         'mbbill/undotree',
