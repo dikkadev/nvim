@@ -35,8 +35,7 @@ vim.opt.foldenable = false
 -- KEYMAPS
 vim.keymap.set('n', '<leader>q', 'set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '<leader>j', '<cmd>lprevious<CR>zz')
+vim.keymap.set('n', '<leader>j', ':!just ')
 vim.keymap.set('n', '<leader>t', ':tabedit %<CR>')
 
 vim.keymap.set('n', 'gh', ':tabedit <cfile><CR>')
