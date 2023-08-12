@@ -50,6 +50,7 @@ vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
 vim.keymap.set('n', '<C-t>', '3<C-e>')
 vim.keymap.set('n', '<C-y>', '3<C-y>')
+vim.keymap.set('n', '<C-p>', 'i<CR><Esc>')
 vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
 
