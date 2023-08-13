@@ -30,7 +30,7 @@ vim.opt.updatetime = 500
 
 vim.opt.autoread = true
 vim.opt.splitright = true
-vim.opt.foldenable = false
+vim.opt.foldlevelstart = 99
 
 -- KEYMAPS
 vim.keymap.set('n', '<leader>q', 'set wrap!<CR>')
