@@ -141,6 +141,7 @@ require('lazy').setup({
             { '<leader>pf', function() require('telescope.builtin').find_files() end, desc = 'Find files' },
             { '<leader>ps', function() require('telescope.builtin').live_grep() end,  desc = 'Find in files' },
             { '<leader>pg', function() require('telescope.builtin').git_files() end,  desc = 'Find git files' },
+            { '<leader>pt', function() require('telescope.builtin').tags() end,       desc = 'Find tags' },
         }
     },
     {
@@ -525,5 +526,16 @@ require('lazy').setup({
     {
         'IndianBoy42/tree-sitter-just',
     },
+    {
+        'c0r73x/neotags.lua',
+        opts = {
+            tools = {
+                find = {
+                    binary = 'fd',
+                    args = { '-t', 'f', '--full-path' },
+                }
+            }
+        },
+    }
 })
 require("dikka.debugger")
