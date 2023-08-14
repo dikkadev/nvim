@@ -37,6 +37,7 @@ vim.keymap.set('n', '<leader>q', 'set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
 vim.keymap.set('n', '<leader>j', ':!just ')
 vim.keymap.set('n', '<leader>t', ':tabedit %<CR>')
+vim.keymap.set('n', '<leader>r', ':e <CR>')
 
 vim.keymap.set('n', 'gh', ':tabedit <cfile><CR>')
 vim.keymap.set({ 'n', 'v' }, '<C-s>', vim.cmd.w)
@@ -229,7 +230,6 @@ require('lazy').setup({
                 vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
                 vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
                 vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
-                vim.keymap.set('n', '<leader>r', ':LspRestart<CR>', opts)
 
                 vim.keymap.set('n', '<leader>vw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
                 vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
