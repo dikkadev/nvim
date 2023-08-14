@@ -200,55 +200,89 @@ require('lazy').setup({
         },
     },
     {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
+        'williamboman/mason.nvim',
+        lazy = false,
+        opts = {
+            ui = {
+                icons = {
+                    package_installed = "✓",
+                    package_pending = "➜",
+                    package_uninstalled = "✗"
+                }
+            }
+        },
+    },
+    {
+        'hrsh7th/nvim-cmp',
+        opts = {
+            sources = {
+                { name = 'nvim_lsp' },
+            },
+        }
+    },
+    {
+        'hrsh7th/cmp-nvim-lsp',
         dependencies = {
-            { 'neovim/nvim-lspconfig' },
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-            { 'folke/trouble.nvim' },
-            { 'aznhe21/actions-preview.nvim' },
+            'hrsh7th/nvim-cmp',
+        },
+    },
+    {
+        'williamboman/mason-lspconfig.nvim',
+        lazy = false,
+        dependencies = {
+            'williamboman/mason.nvim',
+        },
+        opts = {
+            ensure_installed = { 'lua_ls', 'rust_analyzer', 'marksman', 'gopls' },
+        },
+    },
+    {
+        'neovim/nvim-lspconfig',
+        lazy = false,
+        dependencies = {
+            'williamboman/mason-lspconfig.nvim',
+            'hrsh7th/cmp-nvim-lsp',
+            'aznhe21/actions-preview.nvim',
         },
         init = function(_)
-            local lsp = require('lsp-zero').preset({
-                manage_nvim_cmp = {
-                    set_sources = 'recommended',
-                    set_extra_mappings = false,
-                }
+            local lspconfig = require('lspconfig')
+            local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+            require('mason-lspconfig').setup_handlers({
+                function(server_name)
+                    lspconfig[server_name].setup({
+                        capabilities = lsp_capabilities,
+                    })
+                end,
             })
-            lsp.on_attach(function(client, bufnr)
-                lsp.default_keymaps({ buffer = bufnr })
-                local opts = { buffer = bufnr }
 
-                vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-                vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+            vim.api.nvim_create_autocmd('LspAttach', {
+                group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+                callback = function(ev)
+                    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-                vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-                vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
-                vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
-                vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
+                    local opts = { buffer = ev.buf }
+                    vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+                    vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
-                vim.keymap.set('n', '<leader>vw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
-                vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
-                vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
-                vim.keymap.set('n', '<leader>vc', require('actions-preview').code_actions, opts)
-                vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
+                    vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+                    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+                    vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
+                    vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
 
-                vim.keymap.set('n', '<leader>f',
-                    function() vim.lsp.buf.format({ async = false, timeout_ms = 10000 }) end,
-                    opts)
+                    vim.keymap.set('n', '<leader>vw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
+                    vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
+                    vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
+                    vim.keymap.set('n', '<leader>vc', require('actions-preview').code_actions, opts)
+                    vim.keymap.set('n', '<leader>va', function() require('actions-preview').code_actions({ context = { only = { "source" } } }) end, opts)
+                    vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
 
-                vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
-            end)
-            lsp.setup()
-            local cmp = require('cmp')
-            cmp.setup({
-                mapping = {
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                }
+                    vim.keymap.set('n', '<leader>f',
+                        function() vim.lsp.buf.format({ async = false, timeout_ms = 10000 }) end,
+                        opts)
+
+                    vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
+                end,
             })
 
             require('lspconfig').rust_analyzer.setup({
@@ -267,7 +301,7 @@ require('lazy').setup({
                     exportPdf = "never" -- Choose onType, onSave or never.
                 }
             }
-        end
+        end,
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -341,7 +375,7 @@ require('lazy').setup({
                         -- mapping query_strings to modes.
                         selection_modes = {
                             ['@parameter.outer'] = 'v', -- charwise
-                            ['@function.outer'] = 'V', -- linewise
+                            ['@function.outer'] = 'V',  -- linewise
                             ['@class.outer'] = '<c-v>', -- blockwise
                         },
                         -- If you set this to `true` (default is `false`) then any textobject is
@@ -441,9 +475,6 @@ require('lazy').setup({
     {
         'aznhe21/actions-preview.nvim',
         opts = {},
-        keys = {
-            { '<leader>vc', function() require('actions-preview').code_actions() end, desc = 'Show code actions' },
-        },
     },
     {
         'ziontee113/color-picker.nvim',
