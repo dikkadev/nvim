@@ -557,16 +557,5 @@ require('lazy').setup({
     {
         'IndianBoy42/tree-sitter-just',
     },
-    {
-        'c0r73x/neotags.lua',
-        opts = {
-            tools = {
-                find = {
-                    binary = 'fd',
-                    args = { '-t', 'f', '--full-path' },
-                }
-            }
-        },
-    }
 })
 require("dikka.debugger")
