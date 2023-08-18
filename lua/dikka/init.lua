@@ -213,18 +213,70 @@ require('lazy').setup({
         },
     },
     {
-        'hrsh7th/nvim-cmp',
-        opts = {
-            sources = {
-                { name = 'nvim_lsp' },
-            },
-        }
-    },
-    {
         'hrsh7th/cmp-nvim-lsp',
         dependencies = {
             'hrsh7th/nvim-cmp',
+            'L3MON4D3/LuaSnip',
+            'hrsh7th/cmp-buffer',
         },
+        init = function(_)
+            local cmp = require('cmp')
+            local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
+
+            cmp.setup({
+                sources = {
+                    { name = 'nvim_lsp' },
+                },
+                mapping = {
+                    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                    ['<Enter>'] = cmp.mapping.confirm({ select = true }),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    ['<Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
+                    ['<Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
+                    ['<C-p>'] = cmp.mapping(function()
+                        if cmp.visible() then
+                            cmp.select_prev_item(cmp_select_opts)
+                        else
+                            cmp.complete()
+                        end
+                    end),
+                    ['<C-n>'] = cmp.mapping(function()
+                        if cmp.visible() then
+                            cmp.select_next_item(cmp_select_opts)
+                        else
+                            cmp.complete()
+                        end
+                    end),
+                },
+                snippet = {
+                    expand = function(args)
+                        require('luasnip').lsp_expand(args.body)
+                    end,
+                },
+                window = {
+                    documentation = {
+                        max_height = 15,
+                        max_width = 60,
+                    }
+                },
+                formatting = {
+                    fields = { 'abbr', 'menu', 'kind' },
+                    format = function(entry, item)
+                        local short_name = {
+                            nvim_lsp = 'LSP',
+                            nvim_lua = 'nvim'
+                        }
+
+                        local menu_name = short_name[entry.source.name] or entry.source.name
+
+                        item.menu = string.format('[%s]', menu_name)
+                        return item
+                    end,
+                },
+            })
+        end
     },
     {
         'williamboman/mason-lspconfig.nvim',
@@ -259,8 +311,6 @@ require('lazy').setup({
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfig', {}),
                 callback = function(ev)
-                    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
                     local opts = { buffer = ev.buf }
                     vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
                     vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -274,7 +324,9 @@ require('lazy').setup({
                     vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
                     vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
                     vim.keymap.set('n', '<leader>vc', require('actions-preview').code_actions, opts)
-                    vim.keymap.set('n', '<leader>va', function() require('actions-preview').code_actions({ context = { only = { "source" } } }) end, opts)
+                    vim.keymap.set('n', '<leader>va',
+                        function() require('actions-preview').code_actions({ context = { only = { "source" } } }) end,
+                        opts)
                     vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
 
                     vim.keymap.set('n', '<leader>f',
