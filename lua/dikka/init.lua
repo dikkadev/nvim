@@ -33,7 +33,7 @@ vim.opt.splitright = true
 vim.opt.foldlevelstart = 99
 
 -- KEYMAPS
-vim.keymap.set('n', '<leader>q', 'set wrap!<CR>')
+vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
 vim.keymap.set('n', '<leader>j', ':!just ')
 vim.keymap.set('n', '<leader>t', ':tabedit %<CR>')
