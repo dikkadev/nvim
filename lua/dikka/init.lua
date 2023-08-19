@@ -640,5 +640,8 @@ require('lazy').setup({
     {
         'IndianBoy42/tree-sitter-just',
     },
+    {
+        'wakatime/vim-wakatime',
+    },
 })
 require("dikka.debugger")
