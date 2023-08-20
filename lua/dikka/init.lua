@@ -189,7 +189,7 @@ require('lazy').setup({
         keys = {
             {
                 '<leader>pv',
-                function() require('telescope').extensions.file_browser.file_browser() end,
+                function() require('telescope').extensions.file_browser.file_browser({ path = "%:p:h" }) end,
                 desc = 'Find files'
             },
         }
