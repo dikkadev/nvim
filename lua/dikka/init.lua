@@ -631,14 +631,14 @@ require('lazy').setup({
     {
         'djoshea/vim-autoread',
     },
-    {
-        'mfussenegger/nvim-dap',
-    },
-    {
-        'rcarriga/nvim-dap-ui',
-        dependencies = { 'mfussenegger/nvim-dap' },
-        opts = {},
-    },
+    -- {
+    --     'mfussenegger/nvim-dap',
+    -- },
+    -- {
+    --     'rcarriga/nvim-dap-ui',
+    --     dependencies = { 'mfussenegger/nvim-dap' },
+    --     opts = {},
+    -- },
     {
         'NoahTheDuke/vim-just',
     },
@@ -649,4 +649,4 @@ require('lazy').setup({
         'wakatime/vim-wakatime',
     },
 })
-require("dikka.debugger")
+-- require("dikka.debugger")
