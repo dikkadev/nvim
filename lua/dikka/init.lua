@@ -209,7 +209,6 @@ require('lazy').setup({
     },
     {
         'williamboman/mason.nvim',
-        lazy = false,
         opts = {
             ui = {
                 icons = {
@@ -288,7 +287,6 @@ require('lazy').setup({
     },
     {
         'williamboman/mason-lspconfig.nvim',
-        lazy = false,
         dependencies = {
             'williamboman/mason.nvim',
         },
@@ -298,7 +296,6 @@ require('lazy').setup({
     },
     {
         'neovim/nvim-lspconfig',
-        lazy = false,
         dependencies = {
             'williamboman/mason-lspconfig.nvim',
             'hrsh7th/cmp-nvim-lsp',
