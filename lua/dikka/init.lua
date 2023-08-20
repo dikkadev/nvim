@@ -618,5 +618,13 @@ require('lazy').setup({
     {
         'wakatime/vim-wakatime',
     },
+    {
+        'laytan/tailwind-sorter.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+        build = 'cd formatter && pnpm i && pnpm run build',
+        config = {
+            on_save_enabled = true,
+        }
+    },
 })
 -- require("dikka.debugger")
