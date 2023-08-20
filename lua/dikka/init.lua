@@ -362,21 +362,21 @@ require('lazy').setup({
     },
     {
         'nvim-treesitter/nvim-treesitter',
-        opts = {
-            ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vim", "vimdoc",
-                "query" },
-            sync_install = false,
-            auto_install = true,
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-            },
-        },
-        init = function(_, opts)
-            require('nvim-treesitter.configs').setup { opts }
-            vim.opt.foldmethod = 'expr'
-            vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+        build = ":TSUpdate",
+        config = function(_)
+            require('nvim-treesitter.configs').setup {
+                {
+                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", },
+                    highlight = {
+                        enable = true,
+                        additional_vim_regex_highlighting = false,
+                    },
+                }
+            }
         end,
+        keys = {
+            { '<leader>z', function() vim.opt.foldmethod='expr'; vim.opt.foldexpr='nvim_treesitter#foldexpr()' end, desc = "Load folds" },
+        }
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
