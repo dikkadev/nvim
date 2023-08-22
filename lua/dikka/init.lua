@@ -37,7 +37,7 @@ vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
 vim.keymap.set('n', '<leader>j', ':!just ')
 vim.keymap.set('n', '<leader>t', ':tabedit %<CR>')
-vim.keymap.set('n', '<leader>r', ':e <CR>')
+vim.keymap.set('n', '<leader>e', ':e <CR>')
 
 vim.keymap.set('n', 'gh', ':tabedit <cfile><CR>')
 vim.keymap.set({ 'n', 'v' }, '<C-s>', vim.cmd.w)
