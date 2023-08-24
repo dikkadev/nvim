@@ -32,6 +32,10 @@ vim.opt.autoread = true
 vim.opt.splitright = true
 vim.opt.foldlevelstart = 99
 
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
+vim.opt.wrapscan = true
+
 -- KEYMAPS
 vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
