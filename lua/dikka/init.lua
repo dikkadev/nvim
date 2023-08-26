@@ -1,4 +1,5 @@
 vim.g.mapleader = ' '
+unix = jit.os == 'Linux' or jit.os == 'OSX' or jit.os == 'BSD'
 
 -- CONFIGS
 vim.opt.clipboard = 'unnamedplus'
@@ -559,7 +560,10 @@ require('lazy').setup({
     },
     {
         'm-demare/attempt.nvim',
-        opts = {},
+        opts = {
+            dir = unix and '/scratch/' or vim.fn.expand('$TEMP\\') .. 'attempt.nvim/',
+            list_buffers = true,
+        },
         init = function(_)
             require('telescope').load_extension 'attempt'
         end,
