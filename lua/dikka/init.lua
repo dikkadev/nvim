@@ -643,5 +643,12 @@ require('lazy').setup({
             on_save_enabled = true,
         }
     },
+    {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        init = function(_)
+            require('telescope').load_extension('fzf')
+        end
+    },
 })
 -- require("dikka.debugger")
