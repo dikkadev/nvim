@@ -662,5 +662,23 @@ require('lazy').setup({
             { '<leader>o', ':Octo actions<CR>', desc = 'Show all Octo actions' }
         }
     },
+    {
+        'folke/noice.nvim',
+        event = 'VeryLazy',
+        opts = {
+            views = {
+                cmdline_popup = {
+                    size = {
+                        width = 080,
+                        height = "auto",
+                    },
+                },
+            }
+        },
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+            'rcarriga/nvim-notify',
+        }
+    },
 })
 -- require("dikka.debugger")
