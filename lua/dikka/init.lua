@@ -229,6 +229,7 @@ require('lazy').setup({
             'hrsh7th/nvim-cmp',
             'L3MON4D3/LuaSnip',
             'hrsh7th/cmp-buffer',
+            'petertriho/cmp-git',
         },
         init = function(_)
             local cmp = require('cmp')
@@ -237,6 +238,7 @@ require('lazy').setup({
             cmp.setup({
                 sources = {
                     { name = 'nvim_lsp' },
+                    { name = 'git' },
                 },
                 mapping = {
                     ['<C-y>'] = cmp.mapping.confirm({ select = true }),
@@ -287,6 +289,7 @@ require('lazy').setup({
                     end,
                 },
             })
+            require("cmp_git").setup()
         end
     },
     {
