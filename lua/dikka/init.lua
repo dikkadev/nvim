@@ -650,5 +650,17 @@ require('lazy').setup({
             require('telescope').load_extension('fzf')
         end
     },
+    {
+        'pwntester/octo.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim',
+            'nvim-tree/nvim-web-devicons',
+        },
+        opts = {},
+        keys = {
+            { '<leader>o', ':Octo actions<CR>', desc = 'Show all Octo actions' }
+        }
+    },
 })
 -- require("dikka.debugger")
