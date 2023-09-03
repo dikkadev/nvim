@@ -671,6 +671,9 @@ require('lazy').setup({
         'folke/noice.nvim',
         event = 'VeryLazy',
         opts = {
+            messages = {
+                enabled = false,
+            },
             views = {
                 cmdline_popup = {
                     size = {
