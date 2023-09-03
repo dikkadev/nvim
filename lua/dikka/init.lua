@@ -645,6 +645,7 @@ require('lazy').setup({
         build = 'cd formatter && pnpm i && pnpm run build',
         config = {
             on_save_enabled = true,
+            on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
         }
     },
     {
