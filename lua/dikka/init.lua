@@ -519,9 +519,13 @@ require('lazy').setup({
     },
     {
         'ziontee113/color-picker.nvim',
-        opts = {},
+        init = function(_)
+            require('color-picker').setup({})
+        end,
+        lazy = false,
         keys = {
             { '<leader>c', '<cmd>ColorPicker<cr>', desc = 'Color picker' },
+            { mode = 'i',  '<leader>c',            '<cmd>ColorPickerInsert<cr>', desc = 'Color picker' },
         }
     },
     {
