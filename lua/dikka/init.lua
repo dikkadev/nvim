@@ -695,5 +695,9 @@ require('lazy').setup({
             'rcarriga/nvim-notify',
         }
     },
+    {
+        'ellisonleao/dotenv.nvim',
+        opts = {},
+    },
 })
 -- require("dikka.debugger")
