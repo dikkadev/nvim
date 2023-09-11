@@ -120,18 +120,26 @@ require('lazy').setup({
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     },
     {
-        "folke/tokyonight.nvim",
-        lazy = false,
-        priority = 1000,
-        opts = {
-            style = 'night',
-        },
-        init = function(_)
-            vim.cmd [[colorscheme tokyonight]]
+        'nyoom-engineering/oxocarbon.nvim',
+        init = function ()
+            vim.cmd [[colorscheme oxocarbon]]
             vim.cmd [[ hi Visual guifg=#55559b ]]
             vim.cmd [[ hi Visual guibg=#e1e132 ]]
-        end,
+        end
     },
+    -- {
+    --     "folke/tokyonight.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     opts = {
+    --         style = 'night',
+    --     },
+    --     init = function(_)
+    --         vim.cmd [[colorscheme tokyonight]]
+    --         vim.cmd [[ hi Visual guifg=#55559b ]]
+    --         vim.cmd [[ hi Visual guibg=#e1e132 ]]
+    --     end,
+    -- },
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
