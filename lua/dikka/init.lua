@@ -533,7 +533,6 @@ require('lazy').setup({
         lazy = false,
         keys = {
             { '<leader>c', '<cmd>ColorPicker<cr>', desc = 'Color picker' },
-            { mode = 'i',  '<leader>c',            '<cmd>ColorPickerInsert<cr>', desc = 'Color picker' },
         }
     },
     {
