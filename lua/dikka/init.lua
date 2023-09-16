@@ -698,5 +698,8 @@ require('lazy').setup({
         'ellisonleao/dotenv.nvim',
         opts = {},
     },
+    {
+        'fatih/vim-go',
+    }
 })
 -- require("dikka.debugger")
