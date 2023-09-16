@@ -525,16 +525,15 @@ require('lazy').setup({
         'aznhe21/actions-preview.nvim',
         opts = {},
     },
-    {
-        'ziontee113/color-picker.nvim',
-        init = function(_)
-            require('color-picker').setup({})
-        end,
-        lazy = false,
-        keys = {
-            { '<leader>c', '<cmd>ColorPicker<cr>', desc = 'Color picker' },
-        }
-    },
+    -- {
+    --     'max397574/colortils.nvim',
+    --     init = function(_)
+    --         require('colortils').setup()
+    --     end,
+    --     keys = {
+    --         { '<leader>c', '<cmd>Colortils<cr>', desc = 'Color picker' },
+    --     }
+    -- },
     {
         'sett17/quicksub.nvim',
         as = 'quicksub',
