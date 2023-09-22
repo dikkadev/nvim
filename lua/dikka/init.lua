@@ -700,6 +700,12 @@ require('lazy').setup({
     },
     {
         'fatih/vim-go',
-    }
+    },
+    {
+        'sbulav/nredir.nvim',
+        keys = {
+            { '<leader>r', ':Nredir !', desc = 'Nredir' },
+        },
+    },
 })
 -- require("dikka.debugger")
