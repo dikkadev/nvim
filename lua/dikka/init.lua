@@ -41,7 +41,8 @@ vim.opt.wrapscan = true
 vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
 vim.keymap.set('n', '<leader>j', ':!just ')
-vim.keymap.set('n', '<leader>t', ':tabedit %<CR>')
+vim.keymap.set('n', '<leader>T', ':tabe %<CR>')
+vim.keymap.set('n', '<leader>t', ':tabe <CR>')
 vim.keymap.set('n', '<leader>e', ':e <CR>')
 
 vim.keymap.set('n', 'gh', ':tabedit <cfile><CR>')
