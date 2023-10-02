@@ -45,6 +45,7 @@ vim.keymap.set('n', '<leader>T', ':tabe %<CR>')
 vim.keymap.set('n', '<leader>t', ':tabe <CR>')
 vim.keymap.set('n', '<leader>e', ':e <CR>')
 vim.keymap.set('n', '<leader>c', ':')
+vim.keymap.set('n', '<leader>d', ':lcd %:p:h<CR>')
 
 vim.keymap.set('n', 'gh', ':tabedit <cfile><CR>')
 vim.keymap.set({ 'n', 'v' }, '<C-s>', vim.cmd.w)
