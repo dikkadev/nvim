@@ -711,5 +711,30 @@ require('lazy').setup({
             { '<leader>r', ':Nredir !', desc = 'Nredir' },
         },
     },
+    {
+        "desdic/macrothis.nvim",
+        opts = {},
+        keys = {
+            { "<leader>kd", function() require('macrothis').delete() end,   desc = "delete" },
+            { "<leader>ke", function() require('macrothis').edit() end,     desc = "edit" },
+            { "<leader>kl", function() require('macrothis').load() end,     desc = "load" },
+            { "<leader>kn", function() require('macrothis').rename() end,   desc = "rename" },
+            { "<leader>kr", function() require('macrothis').run() end,      desc = "run macro" },
+            { "<leader>ks", function() require('macrothis').save() end,     desc = "save" },
+            { "<leader>kx", function() require('macrothis').register() end, desc = "edit register" },
+            {
+                "<leader>kp",
+                function() require('macrothis').copy_register_printable() end,
+                desc =
+                "Copy register as printable"
+            },
+            {
+                "<leader>km",
+                function() require('macrothis').copy_macro_printable() end,
+                desc =
+                "Copy macro as printable"
+            },
+        }
+    },
 })
 -- require("dikka.debugger")
