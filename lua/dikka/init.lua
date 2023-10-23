@@ -559,12 +559,6 @@ require('lazy').setup({
         lazy = false,
     },
     {
-        'eandrju/cellular-automaton.nvim',
-        keys = {
-            { '<leader>m', '<cmd>CellularAutomaton make_it_rain<CR>', desc = 'Make it rain' },
-        },
-    },
-    {
         'rmagatti/auto-session',
         opts = {
             log_level = "error",
