@@ -780,3 +780,4 @@ if vim.g.neovide then
     vim.o.guifont = "0xProto Nerd Font:h8"
     vim.opt.linespace = -1
 end
+vim.cmd('Copilot disable')
