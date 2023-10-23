@@ -126,7 +126,7 @@ require('lazy').setup({
     },
     {
         'nyoom-engineering/oxocarbon.nvim',
-        init = function ()
+        init = function()
             vim.cmd [[colorscheme oxocarbon]]
             vim.cmd [[ hi Visual guifg=#55559b ]]
             vim.cmd [[ hi Visual guibg=#e1e132 ]]
@@ -342,6 +342,10 @@ require('lazy').setup({
                     vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
                     vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+                    vim.keymap.set('n', 'gD', function()
+                        vim.cmd('tab split')
+                        vim.lsp.buf.definition()
+                    end, opts)
                     vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
                     vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
                     vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
