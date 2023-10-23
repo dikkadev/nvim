@@ -781,3 +781,10 @@ if vim.g.neovide then
     vim.opt.linespace = -1
 end
 vim.cmd('Copilot disable')
+vim.cmd('Dotenv')
+if vim.env.DISABLE_COPILOT == "true" then
+    print('Disabling Copilot')
+    vim.cmd('Copilot disable')
+else
+    vim.cmd('Copilot enable')
+end
