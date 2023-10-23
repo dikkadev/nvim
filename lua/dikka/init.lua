@@ -738,3 +738,5 @@ require('lazy').setup({
     },
 })
 -- require("dikka.debugger")
+
+vim.cmd('Copilot disable')
