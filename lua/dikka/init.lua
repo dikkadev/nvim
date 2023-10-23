@@ -575,7 +575,7 @@ require('lazy').setup({
         'm-demare/attempt.nvim',
         opts = {
             dir = unix and '/scratch/' or vim.fn.expand('$TEMP\\') .. 'attempt.nvim/',
-            ext_options = {'py', 'md', 'sh', 'js', 'c', 'txt'},
+            ext_options = { 'py', 'md', 'sh', 'js', 'c', 'txt' },
             list_buffers = true,
         },
         init = function(_)
