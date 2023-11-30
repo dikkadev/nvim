@@ -687,13 +687,13 @@ require('lazy').setup({
             on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
         }
     },
-    {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        init = function(_)
-            require('telescope').load_extension('fzf')
-        end
-    },
+    -- {
+    --     'nvim-telescope/telescope-fzf-native.nvim',
+    --     build = 'make',
+    --     init = function(_)
+    --         require('telescope').load_extension('fzf')
+    --     end
+    -- },
     {
         'pwntester/octo.nvim',
         requires = {
@@ -787,7 +787,8 @@ if vim.env.DISABLE_COPILOT == "true" then
     vim.cmd('Copilot disable')
 else
     vim.cmd('Copilot enable')
-if vim.g.neovide then
+
+    if vim.g.neovide then
     vim.o.guifont = "0xProto Nerd Font:h8"
     vim.opt.linespace = -1
 end
