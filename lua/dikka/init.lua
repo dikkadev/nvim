@@ -558,6 +558,9 @@ require('lazy').setup({
     },
     {
         'github/copilot.vim',
+        init = function(_)
+            vim.g.copilot_filetypes = { markdown = true }
+        end
     },
     {
         'kaarmu/typst.vim',
