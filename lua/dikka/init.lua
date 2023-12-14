@@ -63,6 +63,7 @@ vim.keymap.set('n', '<C-y>', '3<C-y>')
 vim.keymap.set('n', '<C-p>', 'i<CR><Esc>')
 vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
+vim.keymap.set({ 'n', 'v' }, '<A-x>', ':xa<CR>')
 
 vim.keymap.set('n', 'Q', '<Nop>')
 
@@ -70,6 +71,9 @@ vim.keymap.set('i', '<C-c>', '<Esc>')
 vim.keymap.set('i', '<C-a>', '<Home>')
 
 vim.keymap.set('x', '<leader>p', '|_dP')
+
+vim.keymap.set('n', '<A-j>', 'gT')
+vim.keymap.set('n', '<A-k>', 'gt')
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
@@ -189,38 +193,59 @@ require('lazy').setup({
             require("telescope").load_extension("ui-select")
         end
     },
+    -- {
+    --     'nvim-telescope/telescope-file-browser.nvim',
+    --     dependencies = {
+    --         'nvim-telescope/telescope.nvim',
+    --     },
+    --     init = function(_)
+    --         require("telescope").setup {
+    --             extensions = {
+    --                 file_browser = {
+    --                     hijack_netrw = true,
+    --                 },
+    --             },
+    --         }
+    --         require("telescope").load_extension "file_browser"
+    --     end,
+    --     keys = {
+    --         {
+    --             '<leader>pv',
+    --             function() require('telescope').extensions.file_browser.file_browser({ path = "%:p:h" }) end,
+    --             desc = 'Find files'
+    --         },
+    --     }
+    -- },
     {
-        'nvim-telescope/telescope-file-browser.nvim',
-        dependencies = {
-            'nvim-telescope/telescope.nvim',
-        },
-        init = function(_)
-            require("telescope").setup {
-                extensions = {
-                    file_browser = {
-                        hijack_netrw = true,
-                    },
-                },
-            }
-            require("telescope").load_extension "file_browser"
+        "stevearc/oil.nvim",
+        opts = {},
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        config = function()
+            require("oil").setup({
+                default_file_explorer = true,
+                skip_confirm_for_simple_edits = true,
+                view_options = {
+                    show_hidden = true,
+                    is_always_hidden = function(name, _)
+                        return name:match(".git")
+                    end,
+
+                }
+            })
         end,
         keys = {
-            {
-                '<leader>pv',
-                function() require('telescope').extensions.file_browser.file_browser({ path = "%:p:h" }) end,
-                desc = 'Find files'
-            },
+            { '<leader>pv', '<CMD>Oil<CR>', desc = 'Open file explorer' },
+            { '-',          '<CMD>Oil<CR>', desc = 'Open file explorer' },
         }
     },
     {
         'ThePrimeagen/harpoon',
         branch = 'harpoon2',
-        -- opts = {},
         init = function(_)
             local harpoon = require("harpoon")
             harpoon:setup()
 
-            vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+            vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
             vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
             vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
@@ -390,31 +415,17 @@ require('lazy').setup({
                 }
             }
 
-            require('lspconfig').clangd.setup {
-                cmd = { "clangd", "--background-index" },
-                filetypes = { "c", "cpp" },
-                on_attach = function(client)
-                    client.resolved_capabilities.document_formatting = true
-                end,
-                flags = {
-                    debounce_text_changes = 150,
-                },
-                init_options = {
-                    compilationDatabaseDirectory = "build",
-                    clangdFileStatus = true,
-                },
-                handlers = require('lspconfig').util.default_handlers,
-                settings = {
-                    clangd = {
-                        fallbackFlags = {
-                            "-isystem", "C:/VulkanSDK/1.3.250.1/Include",
-                            "-isystem", "C:/Users/raikr/Documents/Libraries/glfw-3.3.8.bin.WIN64/include",
-                            "-isystem", "C:/Users/raikr/Documents/Libraries/glm",
-                        },
-                    },
-                },
+            require('lspconfig').openscad_lsp.setup {
+                cmd = { "/home/dikka/projs/openscad-lsp/target/release/openscad-lsp" },
+                filetypes = { "openscad" },
+                root_dir = require('lspconfig/util').root_pattern(".git", vim.fn.getcwd()),
+                -- settings = {
+                --     scad = {
+                --         includePaths = { "/home/dikka/3d" }
+                --     }
+                -- }
             }
-        end
+        end,
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -422,13 +433,21 @@ require('lazy').setup({
         config = function(_)
             require('nvim-treesitter.configs').setup {
                 {
-                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", },
+                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ" },
                     highlight = {
                         enable = true,
                         additional_vim_regex_highlighting = false,
                     },
                 }
             }
+            local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+            parser_config.openscad = {
+                install_info = {
+                    url = "https://github.com/bollian/tree-sitter-openscad",
+                    files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
+                }
+            }
+            vim.treesitter.language.register('templ', 'templ')
         end,
         keys = {
             {
@@ -528,10 +547,9 @@ require('lazy').setup({
         },
     },
     {
-        'mbbill/undotree',
-        keys = {
-            { '<leader>u', '<cmd>UndotreeToggle<cr>', desc = 'Toggle UndoTree' },
-        },
+        'lewis6991/gitsigns.nvim',
+        as = 'gitsigns',
+        opts = {},
     },
     {
         'cohama/lexima.vim',
@@ -549,7 +567,11 @@ require('lazy').setup({
     {
         'echasnovski/mini.comment',
         version = '*',
-        opts = {},
+        opts = {
+            mappings = {
+                comment_line = '<leader>gc'
+            },
+        },
     },
     {
         'folke/trouble.nvim',
@@ -587,6 +609,12 @@ require('lazy').setup({
         ft = 'typst',
         lazy = false,
     },
+    -- {
+    --     'chomosuke/typst-preview.nvim',
+    --     ft = 'typst',
+    --     version = '0.1.*',
+    --     build = function() require 'typst-preview'.update() end,
+    -- },
     {
         'rmagatti/auto-session',
         opts = {
@@ -676,24 +704,27 @@ require('lazy').setup({
         'IndianBoy42/tree-sitter-just',
     },
     {
-        'wakatime/vim-wakatime',
-    },
-    {
-        'laytan/tailwind-sorter.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
-        build = 'cd formatter && pnpm i && pnpm run build',
-        config = {
-            on_save_enabled = true,
-            on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
-        }
+        'vrischmann/tree-sitter-templ',
     },
     -- {
-    --     'nvim-telescope/telescope-fzf-native.nvim',
-    --     build = 'make',
-    --     init = function(_)
-    --         require('telescope').load_extension('fzf')
-    --     end
+    --     'wakatime/vim-wakatime',
     -- },
+    -- {
+    --     'laytan/tailwind-sorter.nvim',
+    --     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+    --     build = 'cd formatter && pnpm i && pnpm run build',
+    --     config = {
+    --         on_save_enabled = true,
+    --         on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
+    --     }
+    -- },
+    {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        init = function(_)
+            require('telescope').load_extension('fzf')
+        end
+    },
     {
         'pwntester/octo.nvim',
         requires = {
@@ -765,8 +796,136 @@ require('lazy').setup({
             },
         }
     },
+    {
+        'tjdevries/templ.nvim',
+    },
+    {
+        'lewis6991/gitsigns.nvim',
+        dependencies = { 'folke/which-key.nvim' },
+        init = function(_)
+            require('gitsigns').setup {
+                on_attach = function(bufnr)
+                    local gitsigns = require('gitsigns')
+                    local whichkey = require('which-key')
+
+                    local function map(mode, l, r, name, opts)
+                        opts = opts or {}
+                        opts.buffer = bufnr
+                        vim.keymap.set(mode, l, r, opts)
+                        whichkey.register({ [l] = { r, name } })
+                    end
+
+                    -- Navigation
+                    map('n', ']h', function()
+                        if vim.wo.diff then
+                            vim.cmd.normal({ ']h', bang = true })
+                        else
+                            gitsigns.nav_hunk('next')
+                        end
+                    end, 'Next hunk')
+
+                    map('n', '[h', function()
+                        if vim.wo.diff then
+                            vim.cmd.normal({ '[h', bang = true })
+                        else
+                            gitsigns.nav_hunk('prev')
+                        end
+                    end, 'Previous hunk')
+
+                    map('n', '<leader>hr', gitsigns.reset_hunk, 'Reset hunk')
+                    map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+                        'Reset hunk')
+                    map('n', '<leader>hR', gitsigns.reset_buffer, 'Reset buffer')
+                    map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end, 'Blame line')
+                    map('n', '<leader>hd', gitsigns.diffthis, 'Diff staged')
+                    map('n', '<leader>hD', function() gitsigns.diffthis('~') end, 'Diff HEAD')
+                    map('n', '<leader>td', gitsigns.toggle_deleted, 'Toggle deleted')
+
+                    map('o', 'sh', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
+                end
+            }
+        end,
+    },
+    {
+        'cameron-wags/rainbow_csv.nvim',
+        config = true,
+        ft = {
+            'csv',
+            'tsv',
+            'csv_semicolon',
+            'csv_whitespace',
+            'csv_pipe',
+            'rfc_csv',
+            'rfc_semicolon'
+        },
+        cmd = {
+            'RainbowDelim',
+            'RainbowDelimSimple',
+            'RainbowDelimQuoted',
+            'RainbowMultiDelim'
+        }
+    },
+    {
+        'folke/flash.nvim',
+        event = 'VeryLazy',
+        opts = {},
+        keys = {
+            { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,              desc = 'Flash' },
+            { 'S',     mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end,        desc = 'Flash Treesitter' },
+            { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end,            desc = 'Toggle Flash Search' },
+        },
+    },
+    {
+        'Hoffs/omnisharp-extended-lsp.nvim',
+        keys = {
+            { 'gd', function() require('omnisharp_extended').lsp_definition() end, desc = 'Go to definition' },
+            { '<leader>D', function() require('omnisharp_extended').lsp_type_definition() end, desc = 'Type definition' },
+            { 'gr', function() require('omnisharp_extended').lsp_references() end, desc = 'References' },
+            { 'gi', function() require('omnisharp_extended').lsp_implementation() end, desc = 'Implementation' },
+        },
+     },
+     {
+        'chrishrb/gx.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        keys = {
+            { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' }, desc = 'Browse' },
+        },
+        cmd = { 'Browse' },
+        init = function(_)
+           vim.g.netrw_nogx = 1
+        end,
+        -- config = true,
+        submodules = false,
+        config = function() require('gx').setup {
+            open_browser_app = '/home/dikka/chrome_incognito.sh',
+            open_browser_arg = { '--new-window' },
+        }
+        end,
+    },
 })
+
 -- require("dikka.debugger")
+vim.api.nvim_set_keymap('n', '<leader>;', ':lua require("dikka.python_repl").open_python_repl()<CR>',
+    { noremap = true, silent = true })
+
+vim.filetype.add({
+    extension = {
+        templ = "templ",
+    },
+})
+vim.api.nvim_exec([[
+  augroup FileTypeConfig
+    autocmd!
+    autocmd FileType templ setlocal commentstring=//\ %s
+  augroup END
+]], false)
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+    pattern = "*",
+    callback = function()
+        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 250 })
+    end,
+})
 
 vim.cmd('Dotenv')
 if vim.env.DISABLE_COPILOT == "true" then
