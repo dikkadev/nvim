@@ -63,6 +63,7 @@ vim.keymap.set('n', '<C-y>', '3<C-y>')
 vim.keymap.set('n', '<C-p>', 'i<CR><Esc>')
 vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
+vim.keymap.set({ 'n', 'v' }, '<A-x>', ':xa<CR>')
 
 vim.keymap.set('n', 'Q', '<Nop>')
 
@@ -389,6 +390,17 @@ require('lazy').setup({
                     exportPdf = "never" -- Choose onType, onSave or never.
                 }
             }
+
+            require('lspconfig').openscad_lsp.setup {
+                cmd = { "/home/dikka/projs/openscad-lsp/target/release/openscad-lsp" },
+                filetypes = { "openscad" },
+                root_dir = require('lspconfig/util').root_pattern(".git", vim.fn.getcwd()),
+                -- settings = {
+                --     scad = {
+                --         includePaths = { "/home/dikka/3d" }
+                --     }
+                -- }
+            }
         end,
     },
     {
@@ -404,6 +416,14 @@ require('lazy').setup({
                     },
                 }
             }
+            local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+            parser_config.openscad= {
+                install_info = {
+                    url = "https://github.com/bollian/tree-sitter-openscad",
+                    files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
+                }
+            }
+            vim.treesitter.language.register('python', 'someft')  -- the someft filetype will use the python parser and queries.
         end,
         keys = {
             {
@@ -641,14 +661,14 @@ require('lazy').setup({
     {
         'djoshea/vim-autoread',
     },
-    -- {
-    --     'mfussenegger/nvim-dap',
-    -- },
-    -- {
-    --     'rcarriga/nvim-dap-ui',
-    --     dependencies = { 'mfussenegger/nvim-dap' },
-    --     opts = {},
-    -- },
+    {
+        'mfussenegger/nvim-dap',
+    },
+    {
+        'rcarriga/nvim-dap-ui',
+        dependencies = { 'mfussenegger/nvim-dap' },
+        opts = {},
+    },
     {
         'NoahTheDuke/vim-just',
     },
@@ -746,7 +766,9 @@ require('lazy').setup({
         }
     },
 })
--- require("dikka.debugger")
+
+require("dikka.debugger")
+vim.api.nvim_set_keymap('n', '<leader>;', ':lua require("dikka.python_repl").open_python_repl()<CR>', { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     pattern = "*",
@@ -762,3 +784,19 @@ if vim.env.DISABLE_COPILOT == "true" then
 else
     vim.cmd('Copilot enable')
 end
+
+-- Define an autocmd group for Go-specific settings
+vim.api.nvim_create_augroup("GoSpecificMappings", { clear = true })
+
+-- Autocmd for Go files
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "go",
+    group = "GoSpecificMappings",
+    callback = function()
+        -- Set keybindings for .go files
+        local opts = { noremap = true, silent = true }
+        vim.api.nvim_buf_set_keymap(0, "n", "<leader>gi", "<cmd>GoImpl<CR>", opts)
+        vim.api.nvim_buf_set_keymap(0, "n", "<leader>ge", "<cmd>GoIfErr<CR>", opts)
+    end
+})
+
