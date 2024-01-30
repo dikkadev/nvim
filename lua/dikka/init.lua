@@ -155,6 +155,16 @@ require('lazy').setup({
             pickers = {
                 find_files = {
                     hidden = true,
+                    find_command = {
+                        'rg',
+                        '--files',
+                        '--hidden',
+                        '-g',
+                        '!node_modules/**',
+                        '-g',
+                        '!.git/**',
+                        '-u',
+                    }
                 },
             },
             defaults = {
@@ -162,11 +172,12 @@ require('lazy').setup({
                     i = {
                         ['<C-x>'] = 'select_vertical'
                     }
-                }
+                },
             },
         },
         keys = {
             { '<leader>pf', function() require('telescope.builtin').find_files() end, desc = 'Find files' },
+            -- { '<leader>pf', function() require('telescope.builtin').find_files({ find_command = { 'rg', '--files', '--hidden', '-g', '!node_modules/**', '-g', '!.git/**', '-u', } }) end, desc = 'Find files' },
             { '<leader>ps', function() require('telescope.builtin').live_grep() end,  desc = 'Find in files' },
             { '<leader>pg', function() require('telescope.builtin').git_files() end,  desc = 'Find git files' },
             { '<leader>pt', function() require('telescope.builtin').tags() end,       desc = 'Find tags' },
@@ -200,6 +211,7 @@ require('lazy').setup({
                 extensions = {
                     file_browser = {
                         hijack_netrw = true,
+                        respect_gitignore = false,
                     },
                 },
             }
@@ -417,13 +429,13 @@ require('lazy').setup({
                 }
             }
             local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-            parser_config.openscad= {
+            parser_config.openscad = {
                 install_info = {
                     url = "https://github.com/bollian/tree-sitter-openscad",
                     files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
                 }
             }
-            vim.treesitter.language.register('python', 'someft')  -- the someft filetype will use the python parser and queries.
+            vim.treesitter.language.register('python', 'someft') -- the someft filetype will use the python parser and queries.
         end,
         keys = {
             {
@@ -706,27 +718,27 @@ require('lazy').setup({
             { '<leader>o', ':Octo actions<CR>', desc = 'Show all Octo actions' }
         }
     },
-    {
-        'folke/noice.nvim',
-        event = 'VeryLazy',
-        opts = {
-            messages = {
-                enabled = false,
-            },
-            views = {
-                cmdline_popup = {
-                    size = {
-                        width = 080,
-                        height = "auto",
-                    },
-                },
-            }
-        },
-        dependencies = {
-            'MunifTanjim/nui.nvim',
-            'rcarriga/nvim-notify',
-        }
-    },
+    -- {
+    --     'folke/noice.nvim',
+    --     event = 'VeryLazy',
+    --     opts = {
+    --         messages = {
+    --             enabled = false,
+    --         },
+    --         views = {
+    --             cmdline_popup = {
+    --                 size = {
+    --                     width = 080,
+    --                     height = "auto",
+    --                 },
+    --             },
+    --         }
+    --     },
+    --     dependencies = {
+    --         'MunifTanjim/nui.nvim',
+    --         'rcarriga/nvim-notify',
+    --     }
+    -- },
     {
         'ellisonleao/dotenv.nvim',
         opts = {},
@@ -768,12 +780,13 @@ require('lazy').setup({
 })
 
 require("dikka.debugger")
-vim.api.nvim_set_keymap('n', '<leader>;', ':lua require("dikka.python_repl").open_python_repl()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>;', ':lua require("dikka.python_repl").open_python_repl()<CR>',
+    { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     pattern = "*",
     callback = function()
-        vim.highlight.on_yank({higroup="IncSearch", timeout=250})
+        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 250 })
     end,
 })
 
@@ -799,4 +812,3 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_buf_set_keymap(0, "n", "<leader>ge", "<cmd>GoIfErr<CR>", opts)
     end
 })
-
