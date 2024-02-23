@@ -699,8 +699,22 @@ require('lazy').setup({
     {
         'IndianBoy42/tree-sitter-just',
     },
+<<<<<<< HEAD
     {
         'vrischmann/tree-sitter-templ',
+=======
+    -- {
+    --     'wakatime/vim-wakatime',
+    -- },
+    {
+        'laytan/tailwind-sorter.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+        build = 'cd formatter && pnpm i && pnpm run build',
+        config = {
+            on_save_enabled = true,
+            on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
+        }
+>>>>>>> 1de091b (remove wakatime)
     },
     -- {
     --     'wakatime/vim-wakatime',
