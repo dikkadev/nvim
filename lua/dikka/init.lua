@@ -709,6 +709,22 @@ require('lazy').setup({
     -- {
     --     'wakatime/vim-wakatime',
     -- },
+    {
+        'laytan/tailwind-sorter.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+        build = 'cd formatter && pnpm i && pnpm run build',
+        config = {
+            on_save_enabled = true,
+            on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
+        }
+    },
+    -- {
+    --     'nvim-telescope/telescope-fzf-native.nvim',
+    --     build = 'make',
+    --     init = function(_)
+    --         require('telescope').load_extension('fzf')
+    --     end
+    -- },
     -- {
     --     'laytan/tailwind-sorter.nvim',
     --     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
