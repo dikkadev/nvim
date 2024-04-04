@@ -587,6 +587,12 @@ require('lazy').setup({
         ft = 'typst',
         lazy = false,
     },
+    -- {
+    --     'chomosuke/typst-preview.nvim',
+    --     ft = 'typst',
+    --     version = '0.1.*',
+    --     build = function() require 'typst-preview'.update() end,
+    -- },
     {
         'rmagatti/auto-session',
         opts = {
@@ -661,23 +667,23 @@ require('lazy').setup({
     {
         'djoshea/vim-autoread',
     },
-    {
-        'mfussenegger/nvim-dap',
-    },
-    {
-        'rcarriga/nvim-dap-ui',
-        dependencies = { 'mfussenegger/nvim-dap' },
-        opts = {},
-    },
+    -- {
+    --     'mfussenegger/nvim-dap',
+    -- },
+    -- {
+    --     'rcarriga/nvim-dap-ui',
+    --     dependencies = { 'mfussenegger/nvim-dap' },
+    --     opts = {},
+    -- },
     {
         'NoahTheDuke/vim-just',
     },
     {
         'IndianBoy42/tree-sitter-just',
     },
-    {
-        'wakatime/vim-wakatime',
-    },
+    -- {
+    --     'wakatime/vim-wakatime',
+    -- },
     {
         'laytan/tailwind-sorter.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
