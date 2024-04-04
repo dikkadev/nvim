@@ -689,6 +689,17 @@ require('lazy').setup({
     {
         'djoshea/vim-autoread',
     },
+<<<<<<< HEAD
+=======
+    -- {
+    --     'mfussenegger/nvim-dap',
+    -- },
+    -- {
+    --     'rcarriga/nvim-dap-ui',
+    --     dependencies = { 'mfussenegger/nvim-dap' },
+    --     opts = {},
+    -- },
+>>>>>>> a911ed5 (chore(dikka): disable nvim-dap, dap-ui, and vim-wakatime plugins)
     {
         'NoahTheDuke/vim-just',
     },
