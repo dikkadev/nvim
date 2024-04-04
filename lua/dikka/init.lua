@@ -417,13 +417,13 @@ require('lazy').setup({
                 }
             }
             local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-            parser_config.openscad= {
+            parser_config.openscad = {
                 install_info = {
                     url = "https://github.com/bollian/tree-sitter-openscad",
                     files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
                 }
             }
-            vim.treesitter.language.register('python', 'someft')  -- the someft filetype will use the python parser and queries.
+            vim.treesitter.language.register('python', 'someft') -- the someft filetype will use the python parser and queries.
         end,
         keys = {
             {
@@ -767,13 +767,14 @@ require('lazy').setup({
     },
 })
 
-require("dikka.debugger")
-vim.api.nvim_set_keymap('n', '<leader>;', ':lua require("dikka.python_repl").open_python_repl()<CR>', { noremap = true, silent = true })
+-- require("dikka.debugger")
+vim.api.nvim_set_keymap('n', '<leader>;', ':lua require("dikka.python_repl").open_python_repl()<CR>',
+    { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     pattern = "*",
     callback = function()
-        vim.highlight.on_yank({higroup="IncSearch", timeout=250})
+        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 250 })
     end,
 })
 
@@ -799,4 +800,3 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_buf_set_keymap(0, "n", "<leader>ge", "<cmd>GoIfErr<CR>", opts)
     end
 })
-
