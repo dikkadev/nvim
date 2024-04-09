@@ -190,27 +190,41 @@ require('lazy').setup({
             require("telescope").load_extension("ui-select")
         end
     },
+    -- {
+    --     'nvim-telescope/telescope-file-browser.nvim',
+    --     dependencies = {
+    --         'nvim-telescope/telescope.nvim',
+    --     },
+    --     init = function(_)
+    --         require("telescope").setup {
+    --             extensions = {
+    --                 file_browser = {
+    --                     hijack_netrw = true,
+    --                 },
+    --             },
+    --         }
+    --         require("telescope").load_extension "file_browser"
+    --     end,
+    --     keys = {
+    --         {
+    --             '<leader>pv',
+    --             function() require('telescope').extensions.file_browser.file_browser({ path = "%:p:h" }) end,
+    --             desc = 'Find files'
+    --         },
+    --     }
+    -- },
     {
-        'nvim-telescope/telescope-file-browser.nvim',
-        dependencies = {
-            'nvim-telescope/telescope.nvim',
-        },
-        init = function(_)
-            require("telescope").setup {
-                extensions = {
-                    file_browser = {
-                        hijack_netrw = true,
-                    },
-                },
-            }
-            require("telescope").load_extension "file_browser"
+        "stevearc/oil.nvim",
+        opts = {},
+        dependencies = {'nvim-tree/nvim-web-devicons'},
+        config = function()
+            require("oil").setup({
+                default_file_explorer = true
+            })
         end,
         keys = {
-            {
-                '<leader>pv',
-                function() require('telescope').extensions.file_browser.file_browser({ path = "%:p:h" }) end,
-                desc = 'Find files'
-            },
+            { '<leader>pv', '<CMD>Oil<CR>', desc = 'Open file explorer' },
+            { '-', '<CMD>Oil<CR>', desc = 'Open file explorer' },
         }
     },
     {
@@ -806,3 +820,5 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_buf_set_keymap(0, "n", "<leader>ge", "<cmd>GoIfErr<CR>", opts)
     end
 })
+
+vim.cmd('Copilot disable')
