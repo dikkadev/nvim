@@ -423,7 +423,7 @@ require('lazy').setup({
         config = function(_)
             require('nvim-treesitter.configs').setup {
                 {
-                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", },
+                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ"},
                     highlight = {
                         enable = true,
                         additional_vim_regex_highlighting = false,
@@ -437,7 +437,7 @@ require('lazy').setup({
                     files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
                 }
             }
-            vim.treesitter.language.register('python', 'someft') -- the someft filetype will use the python parser and queries.
+            vim.treesitter.language.register('templ', 'templ')
         end,
         keys = {
             {
@@ -695,18 +695,21 @@ require('lazy').setup({
     {
         'IndianBoy42/tree-sitter-just',
     },
+    {
+        'vrischmann/tree-sitter-templ',
+    },
     -- {
     --     'wakatime/vim-wakatime',
     -- },
-    {
-        'laytan/tailwind-sorter.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
-        build = 'cd formatter && pnpm i && pnpm run build',
-        config = {
-            on_save_enabled = true,
-            on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
-        }
-    },
+    -- {
+    --     'laytan/tailwind-sorter.nvim',
+    --     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+    --     build = 'cd formatter && pnpm i && pnpm run build',
+    --     config = {
+    --         on_save_enabled = true,
+    --         on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
+    --     }
+    -- },
     {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -785,11 +788,26 @@ require('lazy').setup({
             },
         }
     },
+    {
+        "tjdevries/templ.nvim",
+    },
 })
 
 -- require("dikka.debugger")
 vim.api.nvim_set_keymap('n', '<leader>;', ':lua require("dikka.python_repl").open_python_repl()<CR>',
     { noremap = true, silent = true })
+
+vim.filetype.add({
+    extension = {
+        templ = "templ",
+    },
+})
+vim.api.nvim_exec([[
+  augroup FileTypeConfig
+    autocmd!
+    autocmd FileType templ setlocal commentstring=//\ %s
+  augroup END
+]], false)
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     pattern = "*",
@@ -821,4 +839,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
-vim.cmd('Copilot disable')
+-- vim.cmd('Copilot disable')
+
+vim.cmd('autocmd BufEnter * TSBufEnable highlight')
