@@ -437,7 +437,7 @@ require('lazy').setup({
         config = function(_)
             require('nvim-treesitter.configs').setup {
                 {
-                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ" },
+                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ"},
                     highlight = {
                         enable = true,
                         additional_vim_regex_highlighting = false,
@@ -964,3 +964,25 @@ if vim.g.neovide then
     vim.o.guifont = "0xProto Nerd Font:h8"
     vim.opt.linespace = -1
 end
+-- Define an autocmd group for Go-specific settings
+vim.api.nvim_create_augroup("GoSpecificMappings", { clear = true })
+
+-- Autocmd for Go files
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "go",
+    group = "GoSpecificMappings",
+    callback = function()
+        -- Set keybindings for .go files
+        local opts = { noremap = true, silent = true }
+        vim.api.nvim_buf_set_keymap(0, "n", "<leader>gi", "<cmd>GoImpl<CR>", opts)
+        vim.api.nvim_buf_set_keymap(0, "n", "<leader>ge", "<cmd>GoIfErr<CR>", opts)
+    end
+})
+
+-- vim.cmd('Copilot disable')
+
+vim.cmd('autocmd BufEnter * TSBufEnable highlight')
+
+
+
+vim.cmd('autocmd BufEnter * TSBufEnable highlight')
