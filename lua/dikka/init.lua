@@ -689,14 +689,6 @@ require('lazy').setup({
     {
         'djoshea/vim-autoread',
     },
-    -- {
-    --     'mfussenegger/nvim-dap',
-    -- },
-    -- {
-    --     'rcarriga/nvim-dap-ui',
-    --     dependencies = { 'mfussenegger/nvim-dap' },
-    --     opts = {},
-    -- },
     {
         'NoahTheDuke/vim-just',
     },
