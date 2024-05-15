@@ -216,7 +216,7 @@ require('lazy').setup({
     {
         "stevearc/oil.nvim",
         opts = {},
-        dependencies = {'nvim-tree/nvim-web-devicons'},
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             require("oil").setup({
                 default_file_explorer = true
@@ -224,7 +224,7 @@ require('lazy').setup({
         end,
         keys = {
             { '<leader>pv', '<CMD>Oil<CR>', desc = 'Open file explorer' },
-            { '-', '<CMD>Oil<CR>', desc = 'Open file explorer' },
+            { '-',          '<CMD>Oil<CR>', desc = 'Open file explorer' },
         }
     },
     {
@@ -423,7 +423,7 @@ require('lazy').setup({
         config = function(_)
             require('nvim-treesitter.configs').setup {
                 {
-                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ"},
+                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ" },
                     highlight = {
                         enable = true,
                         additional_vim_regex_highlighting = false,
@@ -563,7 +563,11 @@ require('lazy').setup({
     {
         'echasnovski/mini.comment',
         version = '*',
-        opts = {},
+        opts = {
+            mappings = {
+                comment_line = '<leader>gc'
+            },
+        },
     },
     {
         'folke/trouble.nvim',
@@ -789,7 +793,8 @@ require('lazy').setup({
         }
     },
     {
-        "tjdevries/templ.nvim",
+        'tjdevries/templ.nvim',
+    },
     },
 })
 
