@@ -800,15 +800,18 @@ require('lazy').setup({
     },
     {
         'lewis6991/gitsigns.nvim',
+        dependencies = { 'folke/which-key.nvim' },
         init = function(_)
             require('gitsigns').setup {
                 on_attach = function(bufnr)
                     local gitsigns = require('gitsigns')
+                    local whichkey = require('which-key')
 
-                    local function map(mode, l, r, opts)
+                    local function map(mode, l, r, name, opts)
                         opts = opts or {}
                         opts.buffer = bufnr
                         vim.keymap.set(mode, l, r, opts)
+                        whichkey.register({ [l] = { r, name } })
                     end
 
                     -- Navigation
@@ -818,7 +821,7 @@ require('lazy').setup({
                         else
                             gitsigns.nav_hunk('next')
                         end
-                    end)
+                    end, 'Next hunk')
 
                     map('n', '[c', function()
                         if vim.wo.diff then
@@ -826,17 +829,17 @@ require('lazy').setup({
                         else
                             gitsigns.nav_hunk('prev')
                         end
-                    end)
+                    end, 'Previous hunk')
 
-                    map('n', '<leader>hr', gitsigns.reset_hunk)
-                    map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-                    map('n', '<leader>hR', gitsigns.reset_buffer)
-                    map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end)
-                    map('n', '<leader>hd', gitsigns.diffthis)
-                    map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
-                    map('n', '<leader>td', gitsigns.toggle_deleted)
+                    map('n', '<leader>hr', gitsigns.reset_hunk, 'Reset hunk')
+                    map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, 'Reset hunk')
+                    map('n', '<leader>hR', gitsigns.reset_buffer, 'Reset buffer')
+                    map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end, 'Blame line')
+                    map('n', '<leader>hd', gitsigns.diffthis, 'Diff staged')
+                    map('n', '<leader>hD', function() gitsigns.diffthis('~') end, 'Diff HEAD')
+                    map('n', '<leader>td', gitsigns.toggle_deleted, 'Toggle deleted')
 
-                    map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+                    map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
                 end
             }
         end,
