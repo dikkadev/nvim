@@ -65,6 +65,9 @@ vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-x>', ':xa<CR>')
 
+vim.keymap.set('n', 'H', 'gT')
+vim.keymap.set('n', 'L', 'gt')
+
 vim.keymap.set('n', 'Q', '<Nop>')
 
 vim.keymap.set('i', '<C-c>', '<Esc>')
@@ -837,6 +840,25 @@ require('lazy').setup({
                 end
             }
         end,
+    },
+    {
+        'cameron-wags/rainbow_csv.nvim',
+        config = true,
+        ft = {
+            'csv',
+            'tsv',
+            'csv_semicolon',
+            'csv_whitespace',
+            'csv_pipe',
+            'rfc_csv',
+            'rfc_semicolon'
+        },
+        cmd = {
+            'RainbowDelim',
+            'RainbowDelimSimple',
+            'RainbowDelimQuoted',
+            'RainbowMultiDelim'
+        }
     },
 })
 
