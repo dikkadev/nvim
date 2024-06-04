@@ -78,6 +78,10 @@ vim.keymap.set('n', '<A-k>', 'gt')
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
 
+vim.keymap.set('n', '<C-v>', [["+gP]])
+vim.keymap.set('v', '<C-v>', [["+P]])
+vim.keymap.set('i', '<C-v>', [[<ESC>"+pA]])
+
 -- LAZY
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
@@ -689,17 +693,6 @@ require('lazy').setup({
     {
         'djoshea/vim-autoread',
     },
-<<<<<<< HEAD
-=======
-    -- {
-    --     'mfussenegger/nvim-dap',
-    -- },
-    -- {
-    --     'rcarriga/nvim-dap-ui',
-    --     dependencies = { 'mfussenegger/nvim-dap' },
-    --     opts = {},
-    -- },
->>>>>>> a911ed5 (chore(dikka): disable nvim-dap, dap-ui, and vim-wakatime plugins)
     {
         'NoahTheDuke/vim-just',
     },
