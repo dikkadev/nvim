@@ -840,7 +840,7 @@ require('lazy').setup({
                     map('n', '<leader>hD', function() gitsigns.diffthis('~') end, 'Diff HEAD')
                     map('n', '<leader>td', gitsigns.toggle_deleted, 'Toggle deleted')
 
-                    map({ 'o', 'x' }, 'sh', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
+                    map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
                 end
             }
         end,
