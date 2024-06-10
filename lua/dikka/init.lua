@@ -815,9 +815,9 @@ require('lazy').setup({
                     end
 
                     -- Navigation
-                    map('n', ']c', function()
+                    map('n', ']h', function()
                         if vim.wo.diff then
-                            vim.cmd.normal({ ']c', bang = true })
+                            vim.cmd.normal({ ']h', bang = true })
                         else
                             gitsigns.nav_hunk('next')
                         end
@@ -825,14 +825,15 @@ require('lazy').setup({
 
                     map('n', '[c', function()
                         if vim.wo.diff then
-                            vim.cmd.normal({ '[c', bang = true })
+                            vim.cmd.normal({ '[h', bang = true })
                         else
                             gitsigns.nav_hunk('prev')
                         end
                     end, 'Previous hunk')
 
                     map('n', '<leader>hr', gitsigns.reset_hunk, 'Reset hunk')
-                    map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, 'Reset hunk')
+                    map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+                        'Reset hunk')
                     map('n', '<leader>hR', gitsigns.reset_buffer, 'Reset buffer')
                     map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end, 'Blame line')
                     map('n', '<leader>hd', gitsigns.diffthis, 'Diff staged')
@@ -862,6 +863,16 @@ require('lazy').setup({
             'RainbowDelimQuoted',
             'RainbowMultiDelim'
         }
+    },
+    {
+        'folke/flash.nvim',
+        event = 'VeryLazy',
+        opts = {},
+        keys = {
+            { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,              desc = 'Flash' },
+            { 'S',     mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end,        desc = 'Flash Treesitter' },
+            { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end,            desc = 'Toggle Flash Search' },
+        },
     },
 })
 
