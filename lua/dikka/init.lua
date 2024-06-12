@@ -65,15 +65,15 @@ vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-x>', ':xa<CR>')
 
-vim.keymap.set('n', 'H', 'gT')
-vim.keymap.set('n', 'L', 'gt')
-
 vim.keymap.set('n', 'Q', '<Nop>')
 
 vim.keymap.set('i', '<C-c>', '<Esc>')
 vim.keymap.set('i', '<C-a>', '<Home>')
 
 vim.keymap.set('x', '<leader>p', '|_dP')
+
+vim.keymap.set('n', 'J', 'gT')
+vim.keymap.set('n', 'K', 'gt')
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
@@ -370,7 +370,7 @@ require('lazy').setup({
                         vim.cmd('tab split')
                         vim.lsp.buf.definition()
                     end, opts)
-                    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+                    vim.keymap.set('n', 'H', function() vim.lsp.buf.hover() end, opts)
                     vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
                     vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
 
