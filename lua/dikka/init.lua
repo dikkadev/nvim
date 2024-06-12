@@ -222,7 +222,15 @@ require('lazy').setup({
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             require("oil").setup({
-                default_file_explorer = true
+                default_file_explorer = true,
+                skip_configrm_for_simple_edits = true,
+                view_options = {
+                    show_hidden = true,
+                    is_always_hidden = function(name, _)
+                        return name:match(".git")
+                    end,
+
+                }
             })
         end,
         keys = {
@@ -233,7 +241,6 @@ require('lazy').setup({
     {
         'ThePrimeagen/harpoon',
         branch = 'harpoon2',
-        -- opts = {},
         init = function(_)
             local harpoon = require("harpoon")
             harpoon:setup()
