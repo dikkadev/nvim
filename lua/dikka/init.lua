@@ -874,6 +874,15 @@ require('lazy').setup({
             { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end,            desc = 'Toggle Flash Search' },
         },
     },
+    {
+        'Hoffs/omnisharp-extended-lsp.nvim',
+        keys = {
+            { 'gd', function() require('omnisharp_extended').lsp_definition() end, desc = 'Go to definition' },
+            { '<leader>D', function() require('omnisharp_extended').lsp_type_definition() end, desc = 'Type definition' },
+            { 'gr', function() require('omnisharp_extended').lsp_references() end, desc = 'References' },
+            { 'gi', function() require('omnisharp_extended').lsp_implementation() end, desc = 'Implementation' },
+        },
+    },
 })
 
 -- require("dikka.debugger")
