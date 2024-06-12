@@ -883,6 +883,24 @@ require('lazy').setup({
             { 'gr', function() require('omnisharp_extended').lsp_references() end, desc = 'References' },
             { 'gi', function() require('omnisharp_extended').lsp_implementation() end, desc = 'Implementation' },
         },
+     },
+     {
+        'chrishrb/gx.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        keys = {
+            { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' }, desc = 'Browse' },
+        },
+        cmd = { 'Browse' },
+        init = function(_)
+           vim.g.netrw_nogx = 1
+        end,
+        -- config = true,
+        submodules = false,
+        config = function() require('gx').setup {
+            open_browser_app = '/home/dikka/chrome_incognito.sh',
+            open_browser_arg = { '--new-window' },
+        }
+        end,
     },
 })
 
