@@ -223,7 +223,7 @@ require('lazy').setup({
         config = function()
             require("oil").setup({
                 default_file_explorer = true,
-                skip_configrm_for_simple_edits = true,
+                skip_confirm_for_simple_edits = true,
                 view_options = {
                     show_hidden = true,
                     is_always_hidden = function(name, _)
@@ -377,7 +377,7 @@ require('lazy').setup({
                         vim.cmd('tab split')
                         vim.lsp.buf.definition()
                     end, opts)
-                    vim.keymap.set('n', 'H', function() vim.lsp.buf.hover() end, opts)
+                    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
                     vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
                     vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
 
@@ -824,7 +824,7 @@ require('lazy').setup({
                         end
                     end, 'Next hunk')
 
-                    map('n', '[c', function()
+                    map('n', '[h', function()
                         if vim.wo.diff then
                             vim.cmd.normal({ '[h', bang = true })
                         else
@@ -841,7 +841,7 @@ require('lazy').setup({
                     map('n', '<leader>hD', function() gitsigns.diffthis('~') end, 'Diff HEAD')
                     map('n', '<leader>td', gitsigns.toggle_deleted, 'Toggle deleted')
 
-                    map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
+                    map('o', 'sh', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
                 end
             }
         end,
