@@ -951,19 +951,7 @@ if vim.g.neovide then
     vim.o.guifont = "0xProto Nerd Font:h8"
     vim.opt.linespace = -1
 end
-vim.cmd('Copilot disable')
-vim.cmd('Dotenv')
-if vim.env.DISABLE_COPILOT == "true" then
-    print('Disabling Copilot')
-    vim.cmd('Copilot disable')
-else
-    vim.cmd('Copilot enable')
-end
 
-if vim.g.neovide then
-    vim.o.guifont = "0xProto Nerd Font:h8"
-    vim.opt.linespace = -1
-end
 -- Define an autocmd group for Go-specific settings
 vim.api.nvim_create_augroup("GoSpecificMappings", { clear = true })
 
@@ -978,11 +966,5 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_buf_set_keymap(0, "n", "<leader>ge", "<cmd>GoIfErr<CR>", opts)
     end
 })
-
--- vim.cmd('Copilot disable')
-
-vim.cmd('autocmd BufEnter * TSBufEnable highlight')
-
-
 
 vim.cmd('autocmd BufEnter * TSBufEnable highlight')
