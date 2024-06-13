@@ -72,8 +72,8 @@ vim.keymap.set('i', '<C-a>', '<Home>')
 
 vim.keymap.set('x', '<leader>p', '|_dP')
 
-vim.keymap.set('n', 'J', 'gT')
-vim.keymap.set('n', 'K', 'gt')
+vim.keymap.set('n', '<A-j>', 'gT')
+vim.keymap.set('n', '<A-k>', 'gt')
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
