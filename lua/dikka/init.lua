@@ -493,9 +493,6 @@ require('lazy').setup({
                         keymaps = {
                             ["af"] = { query = "@function.outer", desc = "Select outer part of a function" },
                             ["if"] = { query = "@function.inner", desc = "Select inner part of a function" },
-                            ["ac"] = { query = "@class.outer", desc = "Select outer part of a class region" },
-                            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-                            ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
                         },
                         selection_modes = {
                             ['@parameter.outer'] = 'v', -- charwise
@@ -515,21 +512,16 @@ require('lazy').setup({
                         set_jumps = true, -- whether to set jumps in the jumplist
                         goto_next_start = {
                             ["]m"] = "@function.outer",
-                            ["]]"] = { query = "@class.outer", desc = "Next class start" },
-                            ["]o"] = "@loop.*",
-                            ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+                            ["]l"] = "@loop.*",
                         },
                         goto_next_end = {
                             ["]M"] = "@function.outer",
-                            ["]["] = "@class.outer",
                         },
                         goto_previous_start = {
                             ["[m"] = "@function.outer",
-                            ["[["] = "@class.outer",
                         },
                         goto_previous_end = {
                             ["[M"] = "@function.outer",
-                            ["[]"] = "@class.outer",
                         },
                     },
                 },
@@ -870,21 +862,21 @@ require('lazy').setup({
         event = 'VeryLazy',
         opts = {},
         keys = {
-            { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,              desc = 'Flash' },
-            { 'S',     mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end,        desc = 'Flash Treesitter' },
-            { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end,            desc = 'Toggle Flash Search' },
+            { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,       desc = 'Flash' },
+            { 'S',     mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+            { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end,     desc = 'Toggle Flash Search' },
         },
     },
     {
         'Hoffs/omnisharp-extended-lsp.nvim',
         keys = {
-            { 'gd', function() require('omnisharp_extended').lsp_definition() end, desc = 'Go to definition' },
-            { '<leader>D', function() require('omnisharp_extended').lsp_type_definition() end, desc = 'Type definition' },
-            { 'gr', function() require('omnisharp_extended').lsp_references() end, desc = 'References' },
-            { 'gi', function() require('omnisharp_extended').lsp_implementation() end, desc = 'Implementation' },
+            { '<leader>gd', function() require('omnisharp_extended').lsp_definition() end,      desc = 'Go to definition' },
+            { '<leader>D',  function() require('omnisharp_extended').lsp_type_definition() end, desc = 'Type definition' },
+            { '<leader>vr', function() require('omnisharp_extended').lsp_references() end,      desc = 'References' },
+            { '<leader>gi', function() require('omnisharp_extended').lsp_implementation() end,  desc = 'Implementation' },
         },
-     },
-     {
+    },
+    {
         'chrishrb/gx.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
         keys = {
@@ -892,14 +884,15 @@ require('lazy').setup({
         },
         cmd = { 'Browse' },
         init = function(_)
-           vim.g.netrw_nogx = 1
+            vim.g.netrw_nogx = 1
         end,
         -- config = true,
         submodules = false,
-        config = function() require('gx').setup {
-            open_browser_app = '/home/dikka/chrome_incognito.sh',
-            open_browser_arg = { '--new-window' },
-        }
+        config = function()
+            require('gx').setup {
+                open_browser_app = '/home/dikka/chrome_incognito.sh',
+                open_browser_arg = { '--new-window' },
+            }
         end,
     },
 })
