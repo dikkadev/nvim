@@ -386,10 +386,8 @@ require('lazy').setup({
                     vim.keymap.set('n', '<leader>vw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
                     vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
                     vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
-                    vim.keymap.set('n', '<leader>vc', require('actions-preview').code_actions, opts)
-                    vim.keymap.set('n', '<leader>va',
-                        function() require('actions-preview').code_actions({ context = { only = { "source" } } }) end,
-                        opts)
+                    vim.keymap.set('n', '<leader>vc', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+                    vim.keymap.set('n', '<leader>vp', require('actions-preview').code_actions, opts)
                     vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
 
                     vim.keymap.set('n', '<leader>f',
