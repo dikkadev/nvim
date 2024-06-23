@@ -501,12 +501,6 @@ require('lazy').setup({
                         },
                         include_surrounding_whitespace = false,
                     },
-                    swap = {
-                        enable = true,
-                        swap_next = {
-                            ["<leader>n"] = "@parameter.inner",
-                        },
-                    },
                     move = {
                         enable = true,
                         set_jumps = true, -- whether to set jumps in the jumplist
@@ -531,7 +525,22 @@ require('lazy').setup({
             vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
         end
     },
-
+    {
+        'Wansmer/sibling-swap.nvim',
+        dependencies = {
+            'nvim-treesitter',
+            init = function(_)
+                require('sibling-swap').setup({
+                    use_default_keymaps = false,
+                    highlight_node_at_cursor = { ms = 350, hl_opts = { link = 'IncSearch' } },
+                })
+            end,
+        },
+        keys = {
+            { '<leader>n', function() require('sibling-swap').swap_with_right_with_opp() end, desc = 'Swap with right' },
+            { '<leader>N', function() require('sibling-swap').swap_with_left_with_opp() end,  desc = 'Swap with left' },
+        }
+    },
     {
         'kdheepak/lazygit.nvim',
         keys = {
