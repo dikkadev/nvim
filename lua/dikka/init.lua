@@ -566,13 +566,7 @@ require('lazy').setup({
         opts = {},
     },
     {
-        'echasnovski/mini.comment',
-        version = '*',
-        opts = {
-            mappings = {
-                comment_line = '<leader>gc'
-            },
-        },
+        'tpope/vim-commentary',
     },
     {
         'folke/trouble.nvim',
