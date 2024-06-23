@@ -138,19 +138,6 @@ require('lazy').setup({
             vim.cmd [[ hi Visual guibg=#e1e132 ]]
         end
     },
-    -- {
-    --     "folke/tokyonight.nvim",
-    --     lazy = false,
-    --     priority = 1000,
-    --     opts = {
-    --         style = 'night',
-    --     },
-    --     init = function(_)
-    --         vim.cmd [[colorscheme tokyonight]]
-    --         vim.cmd [[ hi Visual guifg=#55559b ]]
-    --         vim.cmd [[ hi Visual guibg=#e1e132 ]]
-    --     end,
-    -- },
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
@@ -195,29 +182,6 @@ require('lazy').setup({
             require("telescope").load_extension("ui-select")
         end
     },
-    -- {
-    --     'nvim-telescope/telescope-file-browser.nvim',
-    --     dependencies = {
-    --         'nvim-telescope/telescope.nvim',
-    --     },
-    --     init = function(_)
-    --         require("telescope").setup {
-    --             extensions = {
-    --                 file_browser = {
-    --                     hijack_netrw = true,
-    --                 },
-    --             },
-    --         }
-    --         require("telescope").load_extension "file_browser"
-    --     end,
-    --     keys = {
-    --         {
-    --             '<leader>pv',
-    --             function() require('telescope').extensions.file_browser.file_browser({ path = "%:p:h" }) end,
-    --             desc = 'Find files'
-    --         },
-    --     }
-    -- },
     {
         "stevearc/oil.nvim",
         opts = {},
@@ -577,15 +541,6 @@ require('lazy').setup({
         'aznhe21/actions-preview.nvim',
         opts = {},
     },
-    -- {
-    --     'max397574/colortils.nvim',
-    --     init = function(_)
-    --         require('colortils').setup()
-    --     end,
-    --     keys = {
-    --         { '<leader>c', '<cmd>Colortils<cr>', desc = 'Color picker' },
-    --     }
-    -- },
     {
         'sett17/quicksub.nvim',
         as = 'quicksub',
@@ -604,12 +559,6 @@ require('lazy').setup({
         ft = 'typst',
         lazy = false,
     },
-    -- {
-    --     'chomosuke/typst-preview.nvim',
-    --     ft = 'typst',
-    --     version = '0.1.*',
-    --     build = function() require 'typst-preview'.update() end,
-    -- },
     {
         'rmagatti/auto-session',
         opts = {
@@ -623,50 +572,6 @@ require('lazy').setup({
             },
         },
     },
-    -- {
-    --     'm-demare/attempt.nvim',
-    --     opts = {
-    --         dir = unix and '/scratch/' or vim.fn.expand('$TEMP\\') .. 'attempt.nvim/',
-    --         ext_options = { 'py', 'md', 'sh', 'js', 'c', 'txt' },
-    --         list_buffers = true,
-    --     },
-    --     init = function(_)
-    --         require('telescope').load_extension 'attempt'
-    --     end,
-    --     keys = {
-    --         {
-    --             '<leader>sn',
-    --             function() require('attempt').new_select() end,
-    --             desc = 'New from predefined',
-    --             silent = true
-    --         },
-    --         {
-    --             '<leader>si',
-    --             function() require('attempt').new_input_ext() end,
-    --             desc = 'custom extension',
-    --             silent = true
-    --         },
-    --         { '<leader>sr', function() require('attempt').run() end, desc = 'Run', silent = true },
-    --         {
-    --             '<leader>sd',
-    --             function() require('attempt').delete_buf() end,
-    --             desc = 'Delete scratch file',
-    --             silent = true
-    --         },
-    --         {
-    --             '<leader>sc',
-    --             function() require('attempt').rename_buf() end,
-    --             desc = 'Rename scratch file',
-    --             silent = true
-    --         },
-    --         {
-    --             '<leader>sl',
-    --             ':Telescope attempt<CR>',
-    --             desc = 'Search scratch files',
-    --             silent = true
-    --         },
-    --     },
-    -- },
     {
         'numToStr/FTerm.nvim',
         opts = {
@@ -684,14 +589,6 @@ require('lazy').setup({
     {
         'djoshea/vim-autoread',
     },
-    -- {
-    --     'mfussenegger/nvim-dap',
-    -- },
-    -- {
-    --     'rcarriga/nvim-dap-ui',
-    --     dependencies = { 'mfussenegger/nvim-dap' },
-    --     opts = {},
-    -- },
     {
         'NoahTheDuke/vim-just',
     },
@@ -701,18 +598,6 @@ require('lazy').setup({
     {
         'vrischmann/tree-sitter-templ',
     },
-    -- {
-    --     'wakatime/vim-wakatime',
-    -- },
-    -- {
-    --     'laytan/tailwind-sorter.nvim',
-    --     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
-    --     build = 'cd formatter && pnpm i && pnpm run build',
-    --     config = {
-    --         on_save_enabled = true,
-    --         on_save_pattern = { '*.html', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' },
-    --     }
-    -- },
     {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
