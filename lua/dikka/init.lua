@@ -629,50 +629,50 @@ require('lazy').setup({
             },
         },
     },
-    {
-        'm-demare/attempt.nvim',
-        opts = {
-            dir = unix and '/scratch/' or vim.fn.expand('$TEMP\\') .. 'attempt.nvim/',
-            ext_options = { 'py', 'md', 'sh', 'js', 'c', 'txt' },
-            list_buffers = true,
-        },
-        init = function(_)
-            require('telescope').load_extension 'attempt'
-        end,
-        keys = {
-            {
-                '<leader>sn',
-                function() require('attempt').new_select() end,
-                desc = 'New from predefined',
-                silent = true
-            },
-            {
-                '<leader>si',
-                function() require('attempt').new_input_ext() end,
-                desc = 'custom extension',
-                silent = true
-            },
-            { '<leader>sr', function() require('attempt').run() end, desc = 'Run', silent = true },
-            {
-                '<leader>sd',
-                function() require('attempt').delete_buf() end,
-                desc = 'Delete scratch file',
-                silent = true
-            },
-            {
-                '<leader>sc',
-                function() require('attempt').rename_buf() end,
-                desc = 'Rename scratch file',
-                silent = true
-            },
-            {
-                '<leader>sl',
-                ':Telescope attempt<CR>',
-                desc = 'Search scratch files',
-                silent = true
-            },
-        },
-    },
+    -- {
+    --     'm-demare/attempt.nvim',
+    --     opts = {
+    --         dir = unix and '/scratch/' or vim.fn.expand('$TEMP\\') .. 'attempt.nvim/',
+    --         ext_options = { 'py', 'md', 'sh', 'js', 'c', 'txt' },
+    --         list_buffers = true,
+    --     },
+    --     init = function(_)
+    --         require('telescope').load_extension 'attempt'
+    --     end,
+    --     keys = {
+    --         {
+    --             '<leader>sn',
+    --             function() require('attempt').new_select() end,
+    --             desc = 'New from predefined',
+    --             silent = true
+    --         },
+    --         {
+    --             '<leader>si',
+    --             function() require('attempt').new_input_ext() end,
+    --             desc = 'custom extension',
+    --             silent = true
+    --         },
+    --         { '<leader>sr', function() require('attempt').run() end, desc = 'Run', silent = true },
+    --         {
+    --             '<leader>sd',
+    --             function() require('attempt').delete_buf() end,
+    --             desc = 'Delete scratch file',
+    --             silent = true
+    --         },
+    --         {
+    --             '<leader>sc',
+    --             function() require('attempt').rename_buf() end,
+    --             desc = 'Rename scratch file',
+    --             silent = true
+    --         },
+    --         {
+    --             '<leader>sl',
+    --             ':Telescope attempt<CR>',
+    --             desc = 'Search scratch files',
+    --             silent = true
+    --         },
+    --     },
+    -- },
     {
         'numToStr/FTerm.nvim',
         opts = {
@@ -904,6 +904,34 @@ require('lazy').setup({
             }
         end,
     },
+    {
+        'AndrewRadev/switch.vim',
+        keys = {
+            { '<leader>s', ':Switch<CR>',        desc = 'Switch' },
+            { '<leader>S', ':SwitchReverse<CR>', desc = 'Switch reverse' },
+        },
+        config = function()
+            vim.g['switch_mapping'] = "<leader>s"
+            vim.g['switch_custom_definitions'] = {
+                vim.fn['switch#NormalizedCaseWords'] { 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' },
+                vim.fn['switch#NormalizedCase'] { 'yes', 'no' },
+                vim.fn['switch#NormalizedCase'] { 'on', 'off' },
+                vim.fn['switch#NormalizedCase'] { '0x00', '0x01' },
+                vim.fn['switch#NormalizedCase'] { 'left', 'right', 'down', 'left' },
+                vim.fn['switch#NormalizedCase'] { 'enable', 'disable' },
+                vim.fn['switch#NormalizedCase'] { 'not', '/*not*/' },
+                { '==', '!=' },
+                {
+                    ["\\<\\(\\l\\)\\(\\l\\+\\(\\u\\l\\+\\)\\+\\)\\>"] = "\\=toupper(submatch(1)) . submatch(2)",        -- Convert camelCase to CamelCase
+                    ["\\<\\(\\u\\l\\+\\)\\(\\u\\l\\+\\)\\+\\>"] =
+                    "\\=tolower(substitute(submatch(0), '\\(\\l\\)\\(\\u\\)', '\\1_\\2', 'g'))",                        -- Convert CamelCase to snake_case
+                    ["\\<\\(\\l\\+\\)\\(_\\l\\+\\)\\+\\>"] = "\\U\\0",                                                  -- Convert snake_case to SCREAMING_SNAKE_CASE
+                    ["\\<\\(\\u\\+\\)\\(_\\u\\+\\)\\+\\>"] = "\\=tolower(substitute(submatch(0), '_', '-', 'g'))",      -- Convert SCREAMING_SNAKE_CASE to kebab-case
+                    ["\\<\\(\\l\\+\\)\\(-\\l\\+\\)\\+\\>"] = "\\=substitute(submatch(0), '-\\(\\l\\)', '\\u\\1', 'g')", -- Convert kebab-case to camelCase
+                },
+            }
+        end,
+    }
 })
 
 -- require("dikka.debugger")
