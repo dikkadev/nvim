@@ -40,7 +40,6 @@ vim.opt.wrapscan = true
 -- KEYMAPS
 vim.keymap.set('n', '<leader>q', ':set wrap!<CR>')
 vim.keymap.set('n', '<leader>w', '<C-w>')
-vim.keymap.set('n', '<leader>j', ':!just ')
 vim.keymap.set('n', '<leader>T', ':tabe %<CR>')
 vim.keymap.set('n', '<leader>t', ':tabe <CR>')
 vim.keymap.set('n', '<leader>e', ':e <CR>')
@@ -750,9 +749,20 @@ require('lazy').setup({
         event = 'VeryLazy',
         opts = {},
         keys = {
-            { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,       desc = 'Flash' },
-            { 'S',     mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
-            { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end,     desc = 'Toggle Flash Search' },
+            { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,   desc = 'Flash' },
+            { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
+            {
+                '<c-s>',
+                mode = { 'n' },
+                function()
+                    require("flash").jump({
+                        search = { mode = "search", max_length = 0 },
+                        label = { after = { 0, 0 } },
+                        pattern = "^"
+                    })
+                end,
+                desc = 'Jump to line'
+            },
         },
     },
     {
