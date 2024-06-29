@@ -756,15 +756,16 @@ require('lazy').setup({
             { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
         },
     },
-    {
-        'Hoffs/omnisharp-extended-lsp.nvim',
-        keys = {
-            { '<leader>gd', function() require('omnisharp_extended').lsp_definition() end,      desc = 'Go to definition' },
-            { '<leader>D',  function() require('omnisharp_extended').lsp_type_definition() end, desc = 'Type definition' },
-            { '<leader>vr', function() require('omnisharp_extended').lsp_references() end,      desc = 'References' },
-            { '<leader>gi', function() require('omnisharp_extended').lsp_implementation() end,  desc = 'Implementation' },
-        },
-    },
+    -- {
+    --     'Hoffs/omnisharp-extended-lsp.nvim',
+    --     event = 'VeryLazy',
+    --     keys = {
+    --         { '<leader>gd', function() require('omnisharp_extended').lsp_definition() end,      desc = 'Go to definition' },
+    --         { '<leader>D',  function() require('omnisharp_extended').lsp_type_definition() end, desc = 'Type definition' },
+    --         { '<leader>vr', function() require('omnisharp_extended').lsp_references() end,      desc = 'References' },
+    --         { '<leader>gi', function() require('omnisharp_extended').lsp_implementation() end,  desc = 'Implementation' },
+    --     },
+    -- },
     {
         'chrishrb/gx.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
