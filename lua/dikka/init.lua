@@ -349,9 +349,6 @@ require('lazy').setup({
                     vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
                     vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
 
-                    vim.keymap.set('n', '<leader>vw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
-                    vim.keymap.set('n', '<leader>vd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
-                    vim.keymap.set('n', '<leader>vr', '<cmd>TroubleToggle lsp_references<cr>', opts)
                     vim.keymap.set('n', '<leader>vc', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
                     vim.keymap.set('n', '<leader>vp', require('actions-preview').code_actions, opts)
                     vim.keymap.set('n', '<leader>vn', function() vim.lsp.buf.rename() end, opts)
@@ -538,6 +535,11 @@ require('lazy').setup({
         'folke/trouble.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {},
+        keys = {
+            { '<leader>vw', '<cmd>Trouble diagnostics toggle focus=true<cr>', desc = 'Toggle workspace diagnostics' },
+            { '<leader>vd', '<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>', desc = 'Toggle buffer diagnostics' },
+            { '<leader>vr', '<cmd>Trouble lsp toggle focus=true<cr>', desc = 'Toggle LSP info' },
+        },
     },
     {
         'aznhe21/actions-preview.nvim',
