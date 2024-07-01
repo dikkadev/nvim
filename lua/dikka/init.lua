@@ -536,9 +536,9 @@ require('lazy').setup({
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {},
         keys = {
-            { '<leader>vw', '<cmd>Trouble diagnostics toggle focus=true<cr>', desc = 'Toggle workspace diagnostics' },
+            { '<leader>vw', '<cmd>Trouble diagnostics toggle focus=true<cr>',              desc = 'Toggle workspace diagnostics' },
             { '<leader>vd', '<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>', desc = 'Toggle buffer diagnostics' },
-            { '<leader>vr', '<cmd>Trouble lsp toggle focus=true<cr>', desc = 'Toggle LSP info' },
+            { '<leader>vr', '<cmd>Trouble lsp toggle focus=true<cr>',                      desc = 'Toggle LSP info' },
         },
     },
     {
@@ -795,15 +795,18 @@ require('lazy').setup({
         },
         config = function()
             vim.g['switch_mapping'] = "<leader>s"
-            vim.g['switch_custom_definitions'] = {
+            vim.g['switch_definitions'] = {
                 vim.fn['switch#NormalizedCaseWords'] { 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' },
+                vim.fn['switch#NormalizedCase'] { 'true', 'false' },
                 vim.fn['switch#NormalizedCase'] { 'yes', 'no' },
                 vim.fn['switch#NormalizedCase'] { 'on', 'off' },
+                vim.fn['switch#NormalizedCase'] { 'and', 'or' },
                 vim.fn['switch#NormalizedCase'] { '0x00', '0x01' },
                 vim.fn['switch#NormalizedCase'] { 'left', 'right', 'down', 'left' },
                 vim.fn['switch#NormalizedCase'] { 'enable', 'disable' },
                 vim.fn['switch#NormalizedCase'] { 'not', '/*not*/' },
                 { '==', '!=' },
+                { '&&', '||' },
                 {
                     ["\\<\\(\\l\\)\\(\\l\\+\\(\\u\\l\\+\\)\\+\\)\\>"] = "\\=toupper(submatch(1)) . submatch(2)",        -- Convert camelCase to CamelCase
                     ["\\<\\(\\u\\l\\+\\)\\(\\u\\l\\+\\)\\+\\>"] =
@@ -812,6 +815,10 @@ require('lazy').setup({
                     ["\\<\\(\\u\\+\\)\\(_\\u\\+\\)\\+\\>"] = "\\=tolower(substitute(submatch(0), '_', '-', 'g'))",      -- Convert SCREAMING_SNAKE_CASE to kebab-case
                     ["\\<\\(\\l\\+\\)\\(-\\l\\+\\)\\+\\>"] = "\\=substitute(submatch(0), '-\\(\\l\\)', '\\u\\1', 'g')", -- Convert kebab-case to camelCase
                 },
+                {                                                                                                       -- Markdown task list
+                    ["\\v^\\(\\s*\\)- \\[ \\] \\(.*\\)"] = "\\1- [x] \\2",
+                    ["\\v^\\(\\s*\\)- \\[x\\] \\(.*\\)"] = "\\1- [ ] \\2",
+                }
             }
         end,
     }
