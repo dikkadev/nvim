@@ -69,7 +69,7 @@ vim.keymap.set({ 'n', 'v' }, '<A-x>', ':xa<CR>')
 
 vim.keymap.set('n', 'Q', '<Nop>')
 
-vim.keymap.set('n', 'vag', 'ggVG')
+vim.keymap.set('n', 'yag', 'ggyG<C-o>')
 
 vim.keymap.set('i', '<C-c>', '<Esc>')
 vim.keymap.set('i', '<C-a>', '<Home>')
