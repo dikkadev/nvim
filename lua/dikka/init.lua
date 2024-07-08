@@ -874,5 +874,5 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.cmd('autocmd BufEnter * TSBufEnable highlight')
 
-vim.cmd('autocmd BufNewFile,BufRead *.cshtml set filetype=html.cshtml.razor')
-vim.cmd('autocmd BufNewFile,BufRead *.razor set filetype=html.cshtml.razor')
+vim.cmd('autocmd BufNewFile,BufRead *.cshtml set filetype=cs.html.cshtml.razor')
+vim.cmd('autocmd BufNewFile,BufRead *.razor set filetype=cs.html.cshtml.razor')
