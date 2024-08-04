@@ -49,7 +49,10 @@ vim.keymap.set('n', '<leader>y', ':let @+ = expand("%")<CR>')
 vim.keymap.set('n', '<leader>Y', ':let @+ = expand("%:p")<CR>')
 
 vim.keymap.set('n', '<A-o>', 'o<Esc>')
-vim.keymap.set('n', '<A-O>', 'O<Esc>')
+vim.keymap.set('n', '<A-O>', 'O<Esc>j')
+
+vim.keymap.set({'n', 'x', 'o'}, 'gs', '^')
+vim.keymap.set({'n', 'x', 'o'}, 'ge', '$')
 
 vim.keymap.set('n', 'gh', ':tabedit <cfile><CR>')
 vim.keymap.set({ 'n', 'v' }, '<C-s>', vim.cmd.w)
@@ -729,6 +732,9 @@ require('lazy').setup({
                 end
             }
         end,
+    },
+    {
+        'eandrju/cellular-automaton.nvim',
     },
     {
         'cameron-wags/rainbow_csv.nvim',
