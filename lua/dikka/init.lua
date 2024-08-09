@@ -25,7 +25,7 @@ vim.opt.inccommand = "nosplit"
 vim.opt.termguicolors = true
 
 vim.opt.signcolumn = "yes:1"
-vim.opt.scrolloff = 20
+vim.opt.scrolloff = 24
 
 vim.opt.updatetime = 500
 
@@ -51,8 +51,8 @@ vim.keymap.set('n', '<leader>Y', ':let @+ = expand("%:p")<CR>')
 vim.keymap.set('n', '<A-o>', 'o<Esc>')
 vim.keymap.set('n', '<A-O>', 'O<Esc>j')
 
-vim.keymap.set({'n', 'x', 'o'}, 'gs', '^')
-vim.keymap.set({'n', 'x', 'o'}, 'ge', '$')
+vim.keymap.set({ 'n', 'x', 'o' }, 'gs', '^')
+vim.keymap.set({ 'n', 'x', 'o' }, 'ge', '$')
 
 vim.keymap.set('n', 'gh', ':tabedit <cfile><CR>')
 vim.keymap.set({ 'n', 'v' }, '<C-s>', vim.cmd.w)
@@ -746,7 +746,13 @@ require('lazy').setup({
     {
         'folke/flash.nvim',
         event = 'VeryLazy',
-        opts = {},
+        opts = {
+            modes = {
+                char = {
+                    enabled = false,
+                },
+            },
+        },
         keys = {
             { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,   desc = 'Flash' },
             { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
