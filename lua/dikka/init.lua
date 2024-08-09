@@ -399,7 +399,7 @@ require('lazy').setup({
         config = function(_)
             require('nvim-treesitter.configs').setup {
                 {
-                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ" },
+                    ensure_installed = { "markdown", "javascript", "go", "rust", "typescript", "c", "lua", "vimdoc", "templ", "markdown_inline", "html" },
                     highlight = {
                         enable = true,
                         additional_vim_regex_highlighting = false,
@@ -821,7 +821,42 @@ require('lazy').setup({
                 }
             }
         end,
-    }
+    },
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {
+            indent = {
+                char = "▏"
+            }
+        },
+    },
+    {
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+
+            "nvim-tree/nvim-web-devicons"
+        },
+        config = function()
+            local presets = require("markview.presets");
+            require("markview").setup({
+                modes = { "n", "i", "no", "c" },
+                hybrid_modes = { "i" },
+
+                headings = presets.headings.glow_labels,
+
+                -- This is nice to have
+                callbacks = {
+                    on_enable = function(_, win)
+                        vim.wo[win].conceallevel = 2;
+                        vim.wo[win].concealcursor = "nc";
+                    end
+                }
+            })
+        end,
+    },
 })
 
 -- require("dikka.debugger")
