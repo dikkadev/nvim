@@ -754,7 +754,7 @@ require('lazy').setup({
             },
         },
         keys = {
-            { 's',     mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,   desc = 'Flash' },
+            { '<C-f>', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end,   desc = 'Flash' },
             { '<c-s>', mode = { 'c' },           function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
         },
     },
@@ -883,12 +883,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.cmd('Dotenv')
-if vim.env.DISABLE_COPILOT == "true" then
-    print('Disabling Copilot')
-    vim.cmd('Copilot disable')
-else
-    vim.cmd('Copilot enable')
-end
+-- if vim.env.DISABLE_COPILOT == "true" then
+--     print('Disabling Copilot')
+--     vim.cmd('Copilot disable')
+-- else
+--     vim.cmd('Copilot enable')
+-- end
 
 -- Define an autocmd group for Go-specific settings
 vim.api.nvim_create_augroup("GoSpecificMappings", { clear = true })
