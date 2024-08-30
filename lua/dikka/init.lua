@@ -48,6 +48,9 @@ vim.keymap.set('n', '<leader>d', ':lcd %:p:h<CR>')
 vim.keymap.set('n', '<leader>y', ':let @+ = expand("%")<CR>')
 vim.keymap.set('n', '<leader>Y', ':let @+ = expand("%:p")<CR>')
 
+vim.keymap.set('n', "'", '"')
+vim.keymap.set('x', "'", '"')
+
 vim.keymap.set('n', '<A-o>', 'o<Esc>')
 vim.keymap.set('n', '<A-O>', 'O<Esc>j')
 
