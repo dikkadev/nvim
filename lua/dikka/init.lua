@@ -72,6 +72,7 @@ vim.keymap.set('n', '<C-p>', 'i<CR><Esc>')
 vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-x>', ':xa<CR>')
+vim.keymap.set({ 'n', 'v' }, '<C-Q>', ':q!<CR>')
 
 vim.keymap.set('n', 'Q', '<Nop>')
 
