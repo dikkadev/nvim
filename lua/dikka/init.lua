@@ -72,7 +72,7 @@ vim.keymap.set('n', '<C-p>', 'i<CR><Esc>')
 vim.keymap.set({ 'n', 'v' }, '<A-a>', ':qa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-w>', ':wa<CR>')
 vim.keymap.set({ 'n', 'v' }, '<A-x>', ':xa<CR>')
-vim.keymap.set({ 'n', 'v' }, '<C-Q>', ':q!<CR>')
+-- vim.keymap.set({ 'n', 'v' }, '<C-Q>', ':q!<CR>')
 
 vim.keymap.set('n', 'Q', '<Nop>')
 
@@ -861,6 +861,12 @@ require('lazy').setup({
             })
         end,
     },
+    {
+        'mbbill/undotree',
+        keys = {
+            { "U", vim.cmd.UndotreeToggle },
+        }
+    },
 })
 
 -- require("dikka.debugger")
@@ -909,9 +915,11 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
--- vim.cmd('Copilot disable')
+vim.cmd('Copilot disable')
 
 vim.cmd('autocmd BufEnter * TSBufEnable highlight')
 
 vim.cmd('autocmd BufNewFile,BufRead *.cshtml set filetype=cs.html.cshtml.razor')
 vim.cmd('autocmd BufNewFile,BufRead *.razor set filetype=cs.html.cshtml.razor')
+
+vim.cmd('autocmd BufNewFile,BufRead *.blade.php set filetype=php.blade')
