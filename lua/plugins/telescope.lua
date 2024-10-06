@@ -4,7 +4,6 @@ return {
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
-      -- "nvim-telescope/telescope-smart-history.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
       "kkharji/sqlite.lua",
     },
@@ -18,10 +17,6 @@ return {
             wrap_results = true,
 
             fzf = {},
-            -- history = {
-            --   path = '~/.local/share/nvim/telescope_history.db',
-            --   limit = 100,
-            -- },
             ["ui-select"] = {
               require("telescope.themes").get_dropdown {},
             },
@@ -36,9 +31,10 @@ return {
         },
     },
     config = function()
-        pcall(require("telescope").load_extension, "fzf")
-        -- pcall(require("telescope").load_extension, "smart_history")
-        pcall(require("telescope").load_extension, "ui-select")
+        -- pcall(require("telescope").load_extension, "fzf")
+        -- pcall(require("telescope").load_extension, "ui-select")
+        require("telescope").load_extension("ui-select")
+        require("telescope").load_extension("fzf")
     end,
     keys = {
         { '<leader>pf', require('telescope.builtin').find_files, desc = 'Find files' },

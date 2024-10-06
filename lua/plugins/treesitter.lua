@@ -7,7 +7,8 @@ return {
             sync_install = false,
             auto_install = true,
             highlight = {
-                additional_vim_regex_highlighting = false,
+                enabled = true,
+                additional_vim_regex_highlighting = true,
             },
         }
     end,

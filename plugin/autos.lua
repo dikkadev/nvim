@@ -7,8 +7,16 @@ api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
-vim.api.nvim_create_augroup('autoreload', { clear = true })
-vim.api.nvim_create_autocmd({'BufEnter', 'FocusGained'}, {
+-- vim.cmd('autocmd BufEnter * TSBufEnable highlight')
+api.nvim_create_autocmd("BufEnter", {
+    pattern = "*",
+    callback = function()
+        api.nvim_command("TSBufEnable highlight")
+    end,
+})
+
+api.nvim_create_augroup('autoreload', { clear = true })
+api.nvim_create_autocmd({'BufEnter', 'FocusGained'}, {
   group = 'autoreload',
   pattern = '*',
   command = 'checktime'

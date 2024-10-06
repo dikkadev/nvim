@@ -23,7 +23,7 @@ opt.wrap = false
 opt.inccommand = 'split'
 
 opt.termguicolors = true
-opt.signcolumn = 'number'
+-- opt.signcolumn = 'number'
 
 opt.scrolloff = 24
 opt.sidescrolloff = 8
