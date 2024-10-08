@@ -1,7 +1,8 @@
 return { 
     {
-        'echasnovski/mini.surround',
-        version = '*',
-        opts = {},
-    }, 
+        'mbbill/undotree',
+        keys = {
+            { '<leader>u', vim.cmd.UndotreeToggle },
+        }
+    },
 }
