@@ -31,3 +31,6 @@ set('n', '<A-k>', 'gt')
 set('', '<A-J>', ':tabm -1<CR>')
 set('', '<A-K>', ':tabm +1<CR>')
 
+set('n', '<leader>cpe', ':Copilot enable<CR>')
+set('n', '<leader>cpd', ':Copilot disable<CR>')
+
