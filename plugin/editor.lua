@@ -22,7 +22,6 @@ opt.wrap = false
 
 opt.inccommand = 'split'
 
-opt.termguicolors = true
 -- opt.signcolumn = 'number'
 
 opt.scrolloff = 24
