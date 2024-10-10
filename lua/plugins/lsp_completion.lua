@@ -127,11 +127,11 @@ return {
             end
 
             -- Set keybindings for snippet navigation
-            vim.keymap.set({ "i", "s" }, "<C-k>", function()
+            vim.keymap.set({ "i", "s" }, "<C-l>", function()
                 return vim.snippet.active { direction = 1 } and vim.snippet.jump(1)
             end, { silent = true })
 
-            vim.keymap.set({ "i", "s" }, "<C-j>", function()
+            vim.keymap.set({ "i", "s" }, "<C-h>", function()
                 return vim.snippet.active { direction = -1 } and vim.snippet.jump(-1)
             end, { silent = true })
 

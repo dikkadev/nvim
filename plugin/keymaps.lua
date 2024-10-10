@@ -34,3 +34,4 @@ set('', '<A-K>', ':tabm +1<CR>')
 set('n', '<leader>cpe', ':Copilot enable<CR>')
 set('n', '<leader>cpd', ':Copilot disable<CR>')
 
+set('i', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
