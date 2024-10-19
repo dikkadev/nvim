@@ -34,5 +34,7 @@ opt.splitright = true
 opt.splitbelow = true
 opt.foldlevelstart = 99
 
+vim.o.showbreak = '⏎'
+
 opt.spelllang = 'en_us'
 opt.spell = true

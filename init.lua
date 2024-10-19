@@ -23,5 +23,5 @@ require('lazy').setup({ import = 'plugins' }, {
   },
 })
 
-vim.cmd('Copilot disable')
+-- vim.cmd('Copilot disable')
 
