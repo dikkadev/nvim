@@ -42,12 +42,14 @@ return {
             {
                 '<leader>pf',
                 function()
-                    local opts = {}
+                    -- local opts = {}
                     local is_git_repo = vim.fn.system("git rev-parse --is-inside-work-tree")
                     if vim.v.shell_error == 0 then
-                        require('telescope.builtin').git_files(opts)  -- Use git_files if inside a git repository
+                        require('telescope.builtin').git_files({
+                            show_untracked = true,
+                        })  -- Use git_files if inside a git repository
                     else
-                        require('telescope.builtin').find_files(opts) -- Fallback to find_files otherwise
+                        require('telescope.builtin').find_files() -- Fallback to find_files otherwise
                     end
                 end,
                 desc = 'Find files'

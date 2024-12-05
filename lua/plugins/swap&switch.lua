@@ -11,11 +11,12 @@ return {
             vim.g['switch_definitions'] = {
                 vim.fn['switch#NormalizedCaseWords'] { 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' },
                 vim.fn['switch#NormalizedCase'] { 'true', 'false' },
+                vim.fn['switch#NormalizedCase'] { 'HIGH', 'LOW' },
                 vim.fn['switch#NormalizedCase'] { 'yes', 'no' },
                 vim.fn['switch#NormalizedCase'] { 'on', 'off' },
                 vim.fn['switch#NormalizedCase'] { 'and', 'or' },
                 vim.fn['switch#NormalizedCase'] { '0x00', '0x01' },
-                vim.fn['switch#NormalizedCase'] { 'left', 'right', 'down', 'left' },
+                vim.fn['switch#NormalizedCase'] { 'left', 'right', 'down', 'up' },
                 vim.fn['switch#NormalizedCase'] { 'enable', 'disable' },
                 vim.fn['switch#NormalizedCase'] { 'not', '/*not*/' },
                 { '==', '!=' },

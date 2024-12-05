@@ -32,7 +32,7 @@ return {
                 },
                 mapping = {
                     ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-                    ['<Enter>'] = cmp.mapping.confirm({ select = true }),
+                    -- ['<Enter>'] = cmp.mapping.confirm({ select = true }),
                     ['<C-e>'] = cmp.mapping.abort(),
                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
@@ -142,36 +142,99 @@ return {
         end
     },
     {
-        'williamboman/mason-lspconfig.nvim',
-        dependencies = {
-            'williamboman/mason.nvim',
-        },
-        opts = {
-            ensure_installed = { 'lua_ls', 'rust_analyzer', 'marksman', 'gopls' },
-        },
-    },
-    {
         'neovim/nvim-lspconfig',
         dependencies = {
             'williamboman/mason-lspconfig.nvim',
             'hrsh7th/cmp-nvim-lsp',
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
             'aznhe21/actions-preview.nvim',
         },
         init = function(_)
-            local lspconfig = require('lspconfig')
-            local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+            local capabilities = nil
+            if pcall(require, "cmp_nvim_lsp") then
+                capabilities = require("cmp_nvim_lsp").default_capabilities()
+            end
+            capabilities.textDocument.semanticTokens = nil
+            -- capabilities.workspace.semanticTokens = nil
+            
+            local lspconfig = require "lspconfig"
 
-            require('mason-lspconfig').setup_handlers({
-                function(server_name)
-                    lspconfig[server_name].setup({
-                        capabilities = lsp_capabilities,
-                    })
-                end,
-            })
+            local servers = {
+                rust_analyzer = {
+                    ["rust-analyzer"] = {
+                        cargo = {
+                            features = "all",
+                        },
+                        -- procMacro = {
+                        --     enable = true,
+                        -- },
+                    },
+                },
+                gopls = {
+                    -- cmd = { "/home/dikka/go/bin/gopls-windows.sh" },
+                },
+                typst_lsp = {
+                    exportPdf = "never",
+                },
+                clangd = {}, -- needed for arduino
+                arduino_language_server = {
+                cmd = {
+                    "/home/dikka/.local/share/nvim/mason/bin/arduino-language-server",
+                    "-clangd", "/home/dikka/.local/share/nvim/mason/bin/clangd",
+                     -- "-fqbn", "Dasduino_Boards:avr:core",
+                     "-log",
+                  },
+                },
+            }
+
+            local servers_to_install = vim.tbl_filter(function(key)
+                local t = servers[key]
+                if type(t) == "table" then
+                    return not t.manual_install
+                else
+                    return t
+                end
+            end, vim.tbl_keys(servers))
+
+            require("mason").setup()
+            local ensure_installed = {
+                lua_ls,
+                marksman,
+                -- 'arduino_language_server',
+                -- 'clangd',
+                -- rust_analyzer,
+                -- gopls,
+            }
+
+            vim.list_extend(ensure_installed, servers_to_install)
+            require("mason-tool-installer").setup { ensure_installed = ensure_installed }
+
+            for name, config in pairs(servers) do
+                if config == true then
+                    config = {}
+                end
+                config = vim.tbl_deep_extend("force", {}, {
+                    capabilities = capabilities,
+                }, config)
+
+                lspconfig[name].setup(config)
+            end
+
+            local disable_semantic_tokens = {
+                lua = true,
+            }
+
 
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfig', {}),
                 callback = function(ev)
+
+                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                    -- Disable semantic tokens for all LSPs
+                    if client and client.server_capabilities.semanticTokensProvider then
+                        client.server_capabilities.semanticTokensProvider = nil
+                    end
+
                     local opts = { buffer = ev.buf }
                     vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
                     vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -194,25 +257,13 @@ return {
                         opts)
 
                     vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
+
+                    -- local filetype = vim.bo[bufnr].filetype
+                    -- if disable_semantic_tokens[filetype] then
+                    --     client.server_capabilities.semanticTokensProvider = nil
+                    -- end
                 end,
             })
-
-            require('lspconfig').rust_analyzer.setup({
-                on_attach = on_attach,
-                settings = {
-                    ["rust-analyzer"] = {
-                        cargo = {
-                            features = "all"
-                        },
-                    }
-                }
-            })
-
-            require('lspconfig').typst_lsp.setup {
-                settings = {
-                    exportPdf = "never" -- Choose onType, onSave or never.
-                }
-            }
         end,
     },
 }
