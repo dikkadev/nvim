@@ -48,10 +48,15 @@ return {
     {
         "chrisgrieser/nvim-various-textobjs",
         event = "UIEnter",
-        opts = { 
-            useDefaultKeymaps = true,
-            disabledKeymaps = { 'L' },
-            notifyNotFound = true,
+        opts = {
+            keymaps = {
+                useDefaults = true,
+                disabledDefaults = { 'L' },
+            },
+            notify = {
+                whenObjectNotFound = true,
+            },
+
         },
         keys = {
             {'U', mode = { 'o', 'x' }, '<cmd>lua require("various-textobjs").url()<CR>'},
