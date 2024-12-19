@@ -5,10 +5,19 @@ return {
         require('nvim-treesitter.configs').setup {
             ensure_installed = {  },
             sync_install = false,
-            auto_install = true,
+            auto_install = false,
             highlight = {
                 enabled = true,
-                additional_vim_regex_highlighting = true,
+                additional_vim_regex_highlighting = false,
+            },
+            incremental_selection = {
+              enable = true,
+              keymaps = {
+                init_selection = "gnn",
+                node_incremental = "grn",
+                scope_incremental = false,
+                node_decremental = "grm",
+              },
             },
         }
     end,
