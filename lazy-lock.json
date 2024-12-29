@@ -50,5 +50,6 @@
   "trouble.nvim": { "branch": "main", "commit": "46cf952fc115f4c2b98d4e208ed1e2dce08c9bf6" },
   "undotree": { "branch": "master", "commit": "78b5241191852ffa9bb5da5ff2ee033160798c3b" },
   "vim-autoread": { "branch": "master", "commit": "24061f84652d768bfb85d222c88580b3af138dab" },
+  "visual-whitespace.nvim": { "branch": "main", "commit": "31d0ed71ad7e376879d7e0df0c8cc4f1467702d4" },
   "which-key.nvim": { "branch": "main", "commit": "8ab96b38a2530eacba5be717f52e04601eb59326" }
 }
