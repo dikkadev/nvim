@@ -3,7 +3,7 @@ return {
     build = ':TSUpdate',
     config = function(_)
         require('nvim-treesitter.configs').setup {
-            ensure_installed = {  },
+            ensure_installed = {},
             sync_install = false,
             auto_install = false,
             highlight = {
@@ -20,6 +20,18 @@ return {
               },
             },
         }
+
+        local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+
+        parser_config.d2 = {
+            install_info = {
+                url = 'https://git.pleshevski.ru/pleshevskiy/tree-sitter-d2',
+                revision = 'main',
+                files = { 'src/parser.c', 'src/scanner.c' },
+            },
+            filetype = 'd2',
+        };
+
     end,
     keys = {
         {
