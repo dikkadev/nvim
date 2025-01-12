@@ -71,6 +71,10 @@ return {
                 capabilities = capabilities,
             })
 
+            lspconfig.templ.setup({
+                capabilities = capabilities,
+            })
+
         end,
     },
 
