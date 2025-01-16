@@ -22,6 +22,7 @@ return {
         dependencies = {
             "saghen/blink.cmp",
             "aznhe21/actions-preview.nvim",
+            "williamboman/mason.nvim",
         },
         event = { "BufReadPre", "BufNewFile" },
         config = function()
@@ -75,6 +76,9 @@ return {
                 capabilities = capabilities,
             })
 
+            lspconfig.omnisharp.setup({
+                capabilities = capabilities,
+            })
         end,
     },
 
