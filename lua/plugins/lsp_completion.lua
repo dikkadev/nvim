@@ -79,6 +79,11 @@ return {
             lspconfig.omnisharp.setup({
                 capabilities = capabilities,
             })
+
+            lspconfig.buf_ls.setup({
+                capabilities = capabilities,
+            })
+
         end,
     },
 
