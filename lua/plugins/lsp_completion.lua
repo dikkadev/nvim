@@ -29,29 +29,34 @@ return {
             local capabilities = require("blink.cmp").get_lsp_capabilities()
             local lspconfig = require("lspconfig")
 
-            vim.api.nvim_create_autocmd('LspAttach', {
-                callback = function(ev)
-                    local opts = { buffer = ev.bufnr, silent = true }
-                    local keymap = vim.keymap.set
+            local default_on_attach = function(client, bufnr, disable_semantic_tokens)
+                local opts = { buffer = bufnr, silent = true }
+                local keymap = vim.keymap.set
 
-                    keymap("n", "]d", vim.diagnostic.goto_next, opts)
-                    keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-                    keymap("n", "gd", vim.lsp.buf.definition, opts)
-                    keymap("n", "gD", function()
-                        vim.cmd("tab split")
-                        vim.lsp.buf.definition()
-                    end, opts)
-                    keymap("n", "K", vim.lsp.buf.hover, opts)
-                    keymap("n", "<leader>vc", vim.lsp.buf.code_action, opts)
-                    keymap("n", "<leader>cp", require("actions-preview").code_actions, opts)
-                    keymap("n", "<leader>vn", vim.lsp.buf.rename, opts)
-                    keymap("n", "<leader>f", vim.lsp.buf.format, opts)
-                    keymap("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+                keymap("n", "]d", vim.diagnostic.goto_next, opts)
+                keymap("n", "[d", vim.diagnostic.goto_prev, opts)
+                keymap("n", "gd", vim.lsp.buf.definition, opts)
+                keymap("n", "gD", function()
+                    vim.cmd("tab split")
+                    vim.lsp.buf.definition()
+                end, opts)
+                keymap("n", "K", vim.lsp.buf.hover, opts)
+                keymap("n", "<leader>vc", vim.lsp.buf.code_action, opts)
+                keymap("n", "<leader>cp", require("actions-preview").code_actions, opts)
+                keymap("n", "<leader>vn", vim.lsp.buf.rename, opts)
+                keymap("n", "<leader>f", vim.lsp.buf.format, opts)
+                keymap("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+
+                if disable_semantic_tokens then
+                    client.server_capabilities.semanticTokensProvider = nil
                 end
-            })
+            end
 
             lspconfig.lua_ls.setup({
                 capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
                 settings = {
                     Lua = {
                         format = {
@@ -70,20 +75,31 @@ return {
 
             lspconfig.gopls.setup({
                 capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
             })
 
             lspconfig.templ.setup({
                 capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
             })
 
             lspconfig.omnisharp.setup({
                 capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
             })
 
             lspconfig.buf_ls.setup({
                 capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, true)
+                end,
             })
-
         end,
     },
 
