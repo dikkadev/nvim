@@ -23,6 +23,8 @@ return {
             "saghen/blink.cmp",
             "aznhe21/actions-preview.nvim",
             "williamboman/mason.nvim",
+
+            "Hoffs/omnisharp-extended-lsp.nvim",
         },
         event = { "BufReadPre", "BufNewFile" },
         config = function()
@@ -89,8 +91,30 @@ return {
 
             lspconfig.omnisharp.setup({
                 capabilities = capabilities,
+                cmd = { "/home/dikka/.local/share/nvim/mason/packages/omnisharp/omnisharp", }, -- doesn't work without this...
                 on_attach = function(client, bufnr)
-                    default_on_attach(client, bufnr, false)
+                    -- -- replaces vim.lsp.buf.definition()
+                    -- nnoremap gd <cmd>lua require('omnisharp_extended').lsp_definition()<cr>
+                    --
+                    -- -- replaces vim.lsp.buf.type_definition()
+                    -- nnoremap <leader>D <cmd>lua require('omnisharp_extended').lsp_type_definition()<cr>
+                    --
+                    -- -- replaces vim.lsp.buf.references()
+                    -- nnoremap gr <cmd>lua require('omnisharp_extended').lsp_references()<cr>
+                    --
+                    -- -- replaces vim.lsp.buf.implementation()
+                    -- nnoremap gi <cmd>lua require('omnisharp_extended').lsp_implementation()<cr>
+
+                    local opts = { buffer = bufnr, silent = true }
+                    local keymap = vim.keymap.set
+
+                    keymap("n", "gd", require("omnisharp_extended").lsp_definition, opts)
+                    keymap("n", "gD", function()
+                        vim.cmd("tab split")
+                        require("omnisharp_extended").lsp_definition()
+                    end, opts)
+                    keymap("n", "<leader>vr", require("omnisharp_extended").lsp_references, opts)
+                    keymap("n", "<leader>vi", require("omnisharp_extended").lsp_implementation, opts)
                 end,
             })
 
