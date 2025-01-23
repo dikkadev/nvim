@@ -35,3 +35,10 @@ set('n', '<leader>cpe', ':Copilot enable<CR>')
 set('n', '<leader>cpd', ':Copilot disable<CR>')
 
 set('i', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+
+set('n', '<leader>cd', vim.diagnostic.setqflist)
+
+set('n', '<C-j>', ':cnext<CR>')
+set('n', '<C-k>', ':cprev<CR>')
+
+set('n', '<leader>r', ':e!<CR>', {noremap = true, silent = true, desc = 'Reload current buffer'})

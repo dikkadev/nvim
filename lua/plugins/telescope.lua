@@ -40,9 +40,9 @@ return {
         end,
         keys = {
             {
-                '<leader>pf',
+                '<leader>pg',
                 function()
-                    -- local opts = {}
+                    local opts = {}
                     local is_git_repo = vim.fn.system("git rev-parse --is-inside-work-tree")
                     if vim.v.shell_error == 0 then
                         require('telescope.builtin').git_files({
@@ -54,8 +54,8 @@ return {
                 end,
                 desc = 'Find files'
             },
+            { '<leader>pf', require('telescope.builtin').find_files, desc = 'Find a file'},
             { '<leader>ps', require('telescope.builtin').live_grep, desc = 'Find in files' },
-            -- { '<leader>pg', require('telescope.builtin').git_files,  desc = 'Find git files' },
             { '<leader>ph', require('telescope.builtin').help_tags, desc = 'Find help tags' },
         }
     }
