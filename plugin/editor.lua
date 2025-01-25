@@ -32,9 +32,14 @@ opt.updatetime = 500
 opt.autoread = true
 opt.splitright = true
 opt.splitbelow = true
-opt.foldlevelstart = 99
 
 vim.o.showbreak = '⏎'
 
 opt.spelllang = 'en_us'
 opt.spell = true
+
+opt.foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . '  ' . (v:foldend - v:foldstart + 1)]]
+opt.foldlevelstart = 99
+opt.fillchars = "fold: "
+opt.foldnestmax = 3
+opt.foldminlines = 1
