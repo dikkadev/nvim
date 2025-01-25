@@ -1,5 +1,0 @@
-return {
-    {
-        'djoshea/vim-autoread',
-    },
-}
