@@ -1,7 +1,6 @@
 return {
     {
         "stevearc/oil.nvim",
-        opts = {},
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {
             default_file_explorer = true,
@@ -11,11 +10,22 @@ return {
                 is_always_hidden = function(name, _)
                     return name:match(".git/")
                 end,
-            }
+            },
+            win_options = {
+                signcolumn = "yes:2",
+            },
         },
         keys = {
             { '-', '<CMD>Oil<CR>', desc = 'Open file explorer' },
         }
+    },
+
+    {
+        "refractalize/oil-git-status.nvim",
+        dependencies = {
+            "stevearc/oil.nvim",
+        },
+        config = true,
     },
 
     {
