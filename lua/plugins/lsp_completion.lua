@@ -93,18 +93,6 @@ return {
                 capabilities = capabilities,
                 cmd = { "/home/dikka/.local/share/nvim/mason/packages/omnisharp/omnisharp", }, -- doesn't work without this...
                 on_attach = function(client, bufnr)
-                    -- -- replaces vim.lsp.buf.definition()
-                    -- nnoremap gd <cmd>lua require('omnisharp_extended').lsp_definition()<cr>
-                    --
-                    -- -- replaces vim.lsp.buf.type_definition()
-                    -- nnoremap <leader>D <cmd>lua require('omnisharp_extended').lsp_type_definition()<cr>
-                    --
-                    -- -- replaces vim.lsp.buf.references()
-                    -- nnoremap gr <cmd>lua require('omnisharp_extended').lsp_references()<cr>
-                    --
-                    -- -- replaces vim.lsp.buf.implementation()
-                    -- nnoremap gi <cmd>lua require('omnisharp_extended').lsp_implementation()<cr>
-
                     local opts = { buffer = bufnr, silent = true }
                     local keymap = vim.keymap.set
 
@@ -140,17 +128,10 @@ return {
                 ["<CR>"] = { "fallback" },
             },
             snippets = {
-                expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
-                active = function(filter)
-                    if filter and filter.direction then
-                        return require('luasnip').jumpable(filter.direction)
-                    end
-                    return require('luasnip').in_snippet()
-                end,
-                jump = function(direction) require('luasnip').jump(direction) end,
+                preset = "luasnip",
             },
             sources = {
-                default = { "lsp", "path", "luasnip", "buffer" },
+                default = { "lsp", "path", "buffer" },
             },
             appearance = {
                 use_nvim_cmp_as_default = true,
