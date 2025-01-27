@@ -103,6 +103,14 @@ return {
                     end, opts)
                     keymap("n", "<leader>vr", require("omnisharp_extended").lsp_references, opts)
                     keymap("n", "<leader>vi", require("omnisharp_extended").lsp_implementation, opts)
+                    -- + all the other non specific ones
+                    keymap("n", "]d", vim.diagnostic.goto_next, opts)
+                    keymap("n", "[d", vim.diagnostic.goto_prev, opts)
+                    keymap("n", "K", vim.lsp.buf.hover, opts)
+                    keymap("n", "<leader>vc", vim.lsp.buf.code_action, opts)
+                    keymap("n", "<leader>vn", vim.lsp.buf.rename, opts)
+                    keymap("n", "<leader>f", vim.lsp.buf.format, opts)
+                    keymap("i", "<C-h>", vim.lsp.buf.signature_help, opts)
                 end,
             })
 
