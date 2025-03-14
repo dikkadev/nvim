@@ -75,6 +75,42 @@ return {
                 }
             })
 
+    --             ◍ python-lsp-server pylsp
+    -- ◍ gopls
+    -- ◍ kotlin-language-server kotlin_language_server
+    -- ◍ lemminx
+    -- ◍ lua-language-server lua_ls
+    -- ◍ pylyzer
+    -- ◍ pyre
+    -- ◍ templ
+
+
+            lspconfig.pylsp.setup({
+                capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
+            })
+            lspconfig.pylyzer.setup({
+                capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
+            })
+            lspconfig.pyre.setup({
+                capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
+            })
+
+            lspconfig.lemminx.setup({
+                capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
+            })
+
             lspconfig.gopls.setup({
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
@@ -83,6 +119,13 @@ return {
             })
 
             lspconfig.templ.setup({
+                capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    default_on_attach(client, bufnr, false)
+                end,
+            })
+
+            lspconfig.tinymist.setup({
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
