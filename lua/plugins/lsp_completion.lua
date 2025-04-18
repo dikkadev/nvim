@@ -75,29 +75,26 @@ return {
                 }
             })
 
-    --             ◍ python-lsp-server pylsp
-    -- ◍ gopls
-    -- ◍ kotlin-language-server kotlin_language_server
-    -- ◍ lemminx
-    -- ◍ lua-language-server lua_ls
-    -- ◍ pylyzer
-    -- ◍ pyre
-    -- ◍ templ
-
-
             lspconfig.pylsp.setup({
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
                 end,
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            pycodestyle = {
+                                enabled = true,
+                                ignore = { 
+                                    "W391", -- "blank line at end of file"
+                                },
+                                maxLineLength = 120,
+                            },
+                        }
+                    }
+                },
             })
-            lspconfig.pylyzer.setup({
-                capabilities = capabilities,
-                on_attach = function(client, bufnr)
-                    default_on_attach(client, bufnr, false)
-                end,
-            })
-            lspconfig.pyre.setup({
+            lspconfig.ruff.setup({
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)

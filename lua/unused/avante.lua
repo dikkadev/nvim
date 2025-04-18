@@ -1,9 +1,11 @@
 return {
   {
     "yetone/avante.nvim",
-    enabled = function()
-        return vim.env.NVIM_AVANTE == '1'
-    end,
+    enabled = false,
+    -- enabled = function()
+    --     print("Avante enabled: ", vim.env.NVIM_AVANTE)
+    --     return vim.env.NVIM_AVANTE == '1'
+    -- end,
     opts = {
         auto_suggestions_provider = 'copilot',
     },
