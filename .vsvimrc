@@ -1,0 +1,139 @@
+" VsVim configuration file for Visual Studio 2022
+" Based on nvim config analysis
+
+" ============================================================================
+" General Settings
+" ============================================================================
+" Note: VsVim doesn't support mapleader, so we use <space> directly in mappings
+
+" Use Visual Studio defaults for most editor behavior but allow some vim overrides
+set vsvim_useeditordefaults
+set vsvim_useeditorindent
+set vsvim_useeditortab
+
+" Basic vim settings that work well with VsVim
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set number
+set relativenumber
+set scrolloff=8
+" Note: sidescrolloff is not supported in VsVim
+
+" Use system clipboard as default register
+set clipboard=unnamed
+
+" ============================================================================
+" Basic Navigation & Movement
+" ============================================================================
+" gs - Go to start of line, ge - Go to end of line
+nnoremap gs ^
+nnoremap ge $
+xnoremap gs ^
+xnoremap ge $
+onoremap gs ^
+onoremap ge $
+
+" Center screen on search results
+nnoremap n nzz
+nnoremap N Nzz
+
+" ============================================================================
+" File Operations
+" ============================================================================
+" Save file
+nnoremap <C-s> :vsc File.SaveAll<CR>
+inoremap <C-s> <Esc>:vsc File.SaveAll<CR>
+
+" ============================================================================
+" Tab Management (using Alt keys like nvim config)
+" ============================================================================
+" Tab navigation
+nnoremap <A-j> :vsc Window.PreviousTab<CR>
+nnoremap <A-k> :vsc Window.NextTab<CR>
+
+" ============================================================================
+" Disable problematic keys
+" ============================================================================
+" Disable Q (no operation)
+nnoremap Q <Nop>
+
+" ============================================================================
+" Insert Mode Bindings
+" ============================================================================
+" C-c as escape (Note: Make sure VsVim handles Ctrl-C in VS Tools->Options->VsVim)
+inoremap <C-c> <Esc>
+
+" ============================================================================
+" LSP/IntelliSense Operations
+" ============================================================================
+" Hover documentation and signature help
+nnoremap K :vsc Edit.QuickInfo<CR>
+inoremap <C-h> <C-o>:vsc Edit.ParameterInfo<CR>
+
+" Go to definition
+nnoremap gd :vsc Edit.GoToDefinition<CR>
+nnoremap gD :vsc Edit.GoToDefinitionInNewTab<CR>
+
+" References and implementations
+nnoremap <space>vr :vsc Edit.FindAllReferences<CR>
+nnoremap <space>vi :vsc Edit.GoToImplementation<CR>
+
+" ============================================================================
+" Error/Diagnostics Navigation
+" ============================================================================
+" Next/Previous error
+nnoremap ]d :vsc View.NextError<CR>
+nnoremap [d :vsc View.PreviousError<CR>
+
+" ============================================================================
+" File Finding/Search
+" ============================================================================
+" Find files (using Visual Studio's Go To All)
+nnoremap <space>pf :vsc Edit.GoToAll<CR>
+
+" ============================================================================
+" Additional useful mappings that align with your nvim workflow
+" ============================================================================
+" Quick fix/code actions (common in VS)
+nnoremap <space>vc :vsc View.QuickActions<CR>
+
+" Format document
+nnoremap <space>f :vsc Edit.FormatDocument<CR>
+
+" Rename symbol
+nnoremap <space>vn :vsc Refactor.Rename<CR>
+
+" Toggle word wrap
+nnoremap <space>q :vsc Edit.ToggleWordWrap<CR>
+
+" Show error list / problems
+nnoremap <space>vw :vsc View.ErrorList<CR>
+
+" Solution explorer (file tree equivalent)
+nnoremap - :vsc View.SolutionExplorer<CR>
+
+" ============================================================================
+" Search and Replace
+" ============================================================================
+" Clear search highlighting
+nnoremap <Esc><Esc> :nohlsearch<CR>
+
+" ============================================================================
+" Comment/Uncomment Operations
+" ============================================================================
+" Comment with gc in visual mode and with motion
+xnoremap gc :vsc Edit.CommentSelection<CR>
+nnoremap gc :vsc Edit.CommentSelection<CR>
+nnoremap gC :vsc Edit.UncommentSelection<CR>
+xnoremap gC :vsc Edit.UncommentSelection<CR>
+
+" Comment line with gcc
+nnoremap gcc :vsc Edit.CommentSelection<CR>
+
+" ============================================================================
+" Visual Mode Enhancements
+" ============================================================================
+" Paste without overwriting register
+xnoremap <space>p "_dP 
