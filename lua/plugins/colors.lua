@@ -6,8 +6,8 @@ return {
   --     -- '',
   --   },
   -- },
-    {
-        'uga-rosa/ccc.nvim',
-        opts = true,
-    },
+    -- {
+    --     'uga-rosa/ccc.nvim',
+    --     opts = true,
+    -- },
 }

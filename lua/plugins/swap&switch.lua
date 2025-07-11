@@ -29,10 +29,10 @@ return {
                     ["\\<\\(\\u\\+\\)\\(_\\u\\+\\)\\+\\>"] = "\\=tolower(substitute(submatch(0), '_', '-', 'g'))",      -- Convert SCREAMING_SNAKE_CASE to kebab-case
                     ["\\<\\(\\l\\+\\)\\(-\\l\\+\\)\\+\\>"] = "\\=substitute(submatch(0), '-\\(\\l\\)', '\\u\\1', 'g')", -- Convert kebab-case to camelCase
                 },
-                {                                                                                                       -- Markdown task list
-                    ["\\v^\\(\\s*\\)- \\[ \\] \\(.*\\)"] = "\\1- [x] \\2",
-                    ["\\v^\\(\\s*\\)- \\[x\\] \\(.*\\)"] = "\\1- [ ] \\2",
-                }
+                -- {                                                                                                       -- Markdown task list
+                --     ["\\v^\\(\\s*\\)- \\[ \\] \\(.*\\)"] = "\\1- [x] \\2",
+                --     ["\\v^\\(\\s*\\)- \\[x\\] \\(.*\\)"] = "\\1- [ ] \\2",
+                -- }
             }
         end,
     },
