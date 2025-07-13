@@ -18,7 +18,7 @@ opt.hlsearch = false
 opt.incsearch = true
 opt.wrapscan = true
 
-opt.wrap = false
+opt.wrap = true
 
 opt.inccommand = 'split'
 

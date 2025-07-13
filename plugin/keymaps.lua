@@ -44,3 +44,5 @@ set('n', '<C-j>', ':cnext<CR>', { desc = 'Next quickfix item' })
 set('n', '<C-k>', ':cprev<CR>', { desc = 'Previous quickfix item' })
 
 set('n', '<leader>r', ':e!<CR>', { noremap = true, silent = true, desc = 'Reload current buffer' })
+
+set('n', '<leader>lu', ':%s/\\r$//<CR>', { desc = 'Remove trailing carriage returns' })

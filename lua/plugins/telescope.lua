@@ -47,16 +47,17 @@ return {
                     if vim.v.shell_error == 0 then
                         require('telescope.builtin').git_files({
                             show_untracked = true,
-                        })  -- Use git_files if inside a git repository
+                        })                                        -- Use git_files if inside a git repository
                     else
                         require('telescope.builtin').find_files() -- Fallback to find_files otherwise
                     end
                 end,
                 desc = 'Find files'
             },
-            { '<leader>pf', require('telescope.builtin').find_files, desc = 'Find a file'},
-            { '<leader>ps', require('telescope.builtin').live_grep, desc = 'Find in files' },
-            { '<leader>ph', require('telescope.builtin').help_tags, desc = 'Find help tags' },
+            { '<leader>pf', require('telescope.builtin').find_files,                                                       desc = 'Find a file' },
+            { '<leader>ps', require('telescope.builtin').live_grep,                                                        desc = 'Find in files' },
+            { '<leader>pg', ':lua require("telescope.builtin").live_grep({ search_dirs = { vim.fn.expand("%:p") } })<CR>', desc = 'Find in current file' },
+            { '<leader>ph', require('telescope.builtin').help_tags,                                                        desc = 'Find help tags' },
         }
     }
 }
