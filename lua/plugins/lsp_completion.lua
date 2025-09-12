@@ -10,10 +10,10 @@ return {
         "williamboman/mason-lspconfig.nvim",
         dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
         config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = {},
-                automatic_installation = false,
-            })
+            -- require("mason-lspconfig").setup({
+            --     ensure_installed = {},
+            --     automatic_installation = false,
+            -- })
         end,
     },
 
@@ -131,7 +131,7 @@ return {
 
             lspconfig.omnisharp.setup({
                 capabilities = capabilities,
-                cmd = { "/home/dikka/.local/share/nvim/mason/packages/omnisharp/omnisharp", }, -- doesn't work without this...
+                cmd = { "/home/dikka/.local/share/nvim/mason/packages/omnisharp/OmniSharp", },
                 on_attach = function(client, bufnr)
                     local opts = { buffer = bufnr, silent = true }
                     local keymap = vim.keymap.set

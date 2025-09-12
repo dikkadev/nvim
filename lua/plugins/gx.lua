@@ -10,7 +10,7 @@ return {
         config = function()
             require('gx').setup {
                 open_browser_app = '/home/dikka/chrome_incognito.sh',
-                open_browser_arg = { '--new-window' },
+                -- open_browser_arg = { '--new-window' },
             }
         end,
         keys = {

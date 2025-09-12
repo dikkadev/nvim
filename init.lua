@@ -25,3 +25,8 @@ require('lazy').setup({ import = 'plugins' }, {
 
 -- vim.cmd('Copilot disable')
 
+-- if vim.g.neovide then
+    -- vim.print(vim.g.neovide_version)
+    vim.o.guifont = "Maple Mono NF:h9"
+    vim.opt.linespace = -1
+-- end
