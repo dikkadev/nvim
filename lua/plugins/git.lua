@@ -1,6 +1,7 @@
 return {
     {
         'lewis6991/gitsigns.nvim',
+        event = "BufReadPost",
         dependencies = { 'folke/which-key.nvim' },
         init = function(_)
             require('gitsigns').setup {
@@ -52,13 +53,12 @@ return {
     },
     {
         'pwntester/octo.nvim',
-        requires = {
+        cmd = { "Octo" },
+        dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope.nvim',
             'nvim-tree/nvim-web-devicons',
         },
-        config = function()
-            require "octo".setup()
-        end
+        opts = {},
     }
 }

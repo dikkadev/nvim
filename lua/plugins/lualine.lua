@@ -1,6 +1,7 @@
 return {
     {
         'nvim-lualine/lualine.nvim',
+        event = "UIEnter",
         opts = {
             theme = 'iceberg_dark',
             sections = {

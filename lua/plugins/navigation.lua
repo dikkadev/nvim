@@ -1,6 +1,7 @@
 return {
     {
         "stevearc/oil.nvim",
+        cmd = "Oil",
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {
             default_file_explorer = true,
@@ -22,10 +23,11 @@ return {
 
     {
         "refractalize/oil-git-status.nvim",
+        ft = "oil",
         dependencies = {
             "stevearc/oil.nvim",
         },
-        config = true,
+        opts = {},
     },
 
     {

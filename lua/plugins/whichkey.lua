@@ -1,7 +1,6 @@
 return {
     {
-        'echasnovski/mini.surround',
-        version = '*',
+        'folke/which-key.nvim',
         event = "VeryLazy",
         opts = {},
     },

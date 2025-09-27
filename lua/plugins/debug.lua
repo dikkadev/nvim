@@ -1,6 +1,7 @@
 return {
   {
     "mfussenegger/nvim-dap",
+    cmd = { "DapContinue", "DapNew", "DapTerminate", "DapToggleBreakpoint" },
     dependencies = {
       "leoluz/nvim-dap-go",
       "rcarriga/nvim-dap-ui",
