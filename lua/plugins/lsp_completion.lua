@@ -85,7 +85,7 @@ return {
                         plugins = {
                             pycodestyle = {
                                 enabled = true,
-                                ignore = { 
+                                ignore = {
                                     "W391", -- "blank line at end of file"
                                 },
                                 maxLineLength = 120,
@@ -123,6 +123,11 @@ return {
             })
 
             lspconfig.tinymist.setup({
+                settings = {
+                    formatterMode = "typstyle",
+                    exportPdf = "onSave",
+                    semanticTokens = "disable"
+                },
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
