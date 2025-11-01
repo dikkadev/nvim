@@ -75,7 +75,7 @@ local plugins = {
             -- Register group name for which-key (if available)
             pcall(function()
                 local wk = require("which-key")
-                wk.register({
+                wk.add({
                     { "<leader>a", group = "opencode" },
                 })
             end)
