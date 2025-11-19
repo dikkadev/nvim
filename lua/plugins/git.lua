@@ -38,7 +38,7 @@ return {
                     map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end, 'Blame line')
                     map('n', '<leader>hd', gitsigns.diffthis, 'Diff staged')
                     map('n', '<leader>hD', function() gitsigns.diffthis('~') end, 'Diff HEAD')
-                    map('n', '<leader>td', gitsigns.toggle_deleted, 'Toggle deleted')
+                    map('n', '<leader>hT', gitsigns.toggle_deleted, 'Toggle deleted')
 
                     map('o', 'sh', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
                 end
