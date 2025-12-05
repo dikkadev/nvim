@@ -29,7 +29,6 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
-            local lspconfig = require("lspconfig")
 
             local default_on_attach = function(client, bufnr, disable_semantic_tokens)
                 local opts = { buffer = bufnr, silent = true }
@@ -54,7 +53,7 @@ return {
                 end
             end
 
-            lspconfig.lua_ls.setup({
+            vim.lsp.config("lua_ls", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
@@ -75,7 +74,7 @@ return {
                 }
             })
 
-            lspconfig.pylsp.setup({
+            vim.lsp.config("pylsp", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
@@ -94,35 +93,36 @@ return {
                     }
                 },
             })
-            lspconfig.ruff.setup({
+
+            vim.lsp.config("ruff", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
                 end,
             })
 
-            lspconfig.lemminx.setup({
+            vim.lsp.config("lemminx", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
                 end,
             })
 
-            lspconfig.gopls.setup({
+            vim.lsp.config("gopls", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
                 end,
             })
 
-            lspconfig.templ.setup({
+            vim.lsp.config("templ", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, false)
                 end,
             })
 
-            lspconfig.tinymist.setup({
+            vim.lsp.config("tinymist", {
                 settings = {
                     formatterMode = "typstyle",
                     exportPdf = "onSave",
@@ -134,7 +134,7 @@ return {
                 end,
             })
 
-            lspconfig.omnisharp.setup({
+            vim.lsp.config("omnisharp", {
                 capabilities = capabilities,
                 cmd = { "/home/dikka/.local/share/nvim/mason/packages/omnisharp/OmniSharp", },
                 on_attach = function(client, bufnr)
@@ -159,7 +159,7 @@ return {
                 end,
             })
 
-            lspconfig.buf_ls.setup({
+            vim.lsp.config("buf_ls", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     default_on_attach(client, bufnr, true)

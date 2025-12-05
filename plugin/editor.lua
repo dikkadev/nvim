@@ -1,6 +1,18 @@
 local opt = vim.opt
 
 opt.clipboard = 'unnamedplus'
+vim.g.clipboard = {
+  name = 'win32yank',
+  copy = {
+    ['+'] = '/mnt/c/Users/raikr/Documents/bins/win32yank.exe -i --crlf',
+    ['*'] = '/mnt/c/Users/raikr/Documents/bins/win32yank.exe -i --crlf',
+  },
+  paste = {
+    ['+'] = '/mnt/c/Users/raikr/Documents/bins/win32yank.exe -o --lf',
+    ['*'] = '/mnt/c/Users/raikr/Documents/bins/win32yank.exe -o --lf',
+  },
+  cache_enabled = 0,
+}
 
 opt.nu = true
 opt.relativenumber = true
